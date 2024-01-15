@@ -1,0 +1,429 @@
+/* Login form */
+
+body {
+  margin: 0;
+}
+.l-container {
+  width: 80%;
+  max-width: 300px;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px black;
+  position: relative;
+}
+
+.l-container .l-logo {
+  margin-top: -10%;
+  text-align: center;
+  margin-bottom: -18%;
+}
+
+.l-container .l-logo img {
+  max-width: 40%;
+}
+
+.page-header {
+  color: black;
+  width: 100%;
+  float: left;
+}
+
+.page-header h1 {
+  text-align: center;
+  font-size: 40px;
+  font-weight: normal;
+}
+
+.page-header h1 small {
+  font-size: 11px;
+  display: block;
+}
+
+form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+input {
+  font-family: "Inter", sans-serif;
+  color: black;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 13px;
+  margin-bottom: 10px;
+}
+
+/* "Remember Me" checkbox */
+form label {
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+}
+
+form label input {
+  margin-top: 9px;
+  margin-right: 5px;
+}
+
+button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #2367a0;
+  color: #fff;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+button:hover {
+  background-color: #2596be;
+}
+
+a {
+  color: #428bca;
+  text-decoration: none;
+  margin-top: 10px;
+}
+
+.forgot-password {
+  font-size: 13px;
+  text-align: center;
+  margin-top: 10px;
+}
+
+.notification {
+  margin-left: 6px;
+  margin-bottom: 10px;
+  font-size: 12px;
+  color: red;
+}
+
+/* eof login form */
+
+/* Body */
+
+.sidebar {
+  font-family: "Inter", sans-serif;
+  min-height: 100%;
+  position: absolute;
+  width: 245px;
+  padding: 0px 20px 0px 10px;
+  background-color: #212b36;
+  background-image: url("images/nav_line.jpg");
+  background-position: right top;
+  background-repeat: repeat-y;
+}
+
+
+.logo-container {
+  text-align: center;
+  margin-bottom: 15px; 
+  border-bottom: 1px solid #fff;
+}
+
+.sidebar-logo {
+  margin-bottom: 20px;
+  max-width: 220px; 
+  width: 100%; 
+  margin-top: 25px;
+}
+
+/* Sidebar Menu */
+.sidebar ul.sidebar-menu {
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar ul.sidebar-menu i {
+  margin-right: 8px; 
+  font-size: 20px;
+}
+
+.sidebar ul.sidebar-menu li {
+  padding: 5px;
+}
+
+.sidebar ul.sidebar-menu a {
+  display: flow-root;
+  text-decoration: none;
+  color: #919eab;
+  font-size: 18px; 
+  padding: 18px; 
+  border-radius: 5px;
+}
+
+.sidebar ul.sidebar-menu a:hover {
+  color: #f4f6f8;
+  background-color: #24364d;
+  border: none;
+}
+
+/* Navigation*/
+
+.body {
+  font-family: "Segoe UI", Arial, sans-serif;
+  position: relative;
+  margin-left: 250px; 
+  padding: 0px 20px 0px 20px;
+}
+.body .navigation {
+  padding: 10px 0px 25px;
+  float: right;
+  margin: 0px;
+  list-style: none;
+  display: block;
+  position: relative;
+}
+
+.body .navigation .user {
+  display: block;
+  float: left;
+  clear: both;
+  position: relative;
+}
+
+.body .navigation .user img {
+  margin-right: 8px;
+  float: left;
+  border: 2px solid #2367a0;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+}
+
+.body .navigation .user .online-indicator {
+  position: absolute;
+  left: 10%;
+  bottom: -7px;
+  width: 10px;
+  height: 10px;
+  background-color: #4caf50; /* Green color for online */
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 5px;
+  border: 2px solid #fff;
+  transform: translate(70%, -50%) rotate(320deg);
+}
+
+.body .navigation .user a {
+  font-family: "Inter", sans-serif;
+  display: block;
+  float: left;
+  text-decoration: none;
+}
+.body .navigation .user a span {
+  margin-top: -2px;
+  font-size: 15px;
+  color: #333;
+  line-height: 18px;
+  display: block;
+  clear: both;
+}
+.body .navigation .user a .sm {
+  font-size: 13px;
+  color: #666;
+  line-height: 20px;
+  display: block;
+  clear: both;
+}
+
+/* page header body  */
+
+.page-header .nav-header {
+  margin-left: 25px;
+  float: left;
+  margin-bottom: 5px;
+}
+
+.page-header h2 {
+  padding: 10px 0 10px; 
+  text-align: center;
+  font-size: 40px;
+  font-weight: normal;
+  margin-bottom: 5px;
+}
+.page-header h2 small {
+  font-size: 25px;
+  color: #999;
+  line-height: 20px;
+}
+
+.sub-header {
+  margin-left: 25px;
+  font-size: 15px;
+  color: #999;
+  padding: 10px 15px;
+  margin-bottom: 20px;
+  list-style: none;
+  background-color: #f5f5f5;
+  border-radius: 4px;
+  clear: left;
+}
+
+.section-divider {
+  margin-left: 25px;
+  height: 1px; 
+  background-color: #eee; 
+  margin-bottom: 20px;
+}
+
+/* eof page header body */
+/* eof body */
+
+/* Calendar CSS */
+
+.section-divider1 {
+  margin-top: 5px;
+  height: 1px;
+  background-color: #009ad7;
+}
+
+.wrapper {
+  width: 100%;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.wrapper header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 5px;
+}
+
+header .icons {
+  display: contents;
+}
+
+header .icons span {
+  height: 20px;
+  width: 20px;
+  margin: 0 1px;
+  cursor: pointer;
+  color: #878787;
+  line-height: 38px;
+  font-size: 1rem;
+  user-select: none;
+  border-radius: 50%;
+}
+
+.icons span:last-child {
+  margin-right: -10px;
+}
+
+header .icons span:hover {
+  background: #f2f2f2;
+}
+
+header .current-date {
+  color: #c9c9c9;
+  font-size: 1rem;
+}
+
+.calendar {
+  padding: 5px;
+}
+
+.calendar ul {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  text-align: center;
+  padding: 0;
+  margin: 0;
+}
+.calendar .days {
+  margin-bottom: 5px;
+}
+.calendar li {
+  color: #c9c9c9;
+  width: calc(100% / 7);
+  font-size: 1rem;
+}
+.calendar .weeks li {
+  color: #666;
+  font-weight: 500;
+  cursor: default;
+}
+.calendar .days li {
+  z-index: 1;
+  cursor: pointer;
+  position: relative;
+  margin-top: 30px;
+}
+.days li.inactive {
+  color: #666;
+}
+.days li.active {
+  color: #fff;
+}
+.days li::before {
+  position: absolute;
+  content: "";
+  left: 50%;
+  top: 50%;
+  height: 40px;
+  width: 40px;
+  z-index: -1;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+.days li.active::before {
+  border: 1px solid #2367a0;
+}
+.days li:not(.active):hover::before {
+  border: 1px solid #2367a0;
+}
+
+/* EOF Calendar CSS */
+
+/* Media Query for smaller screens */
+@media screen and (max-width: 600px) {
+  .container {
+    width: auto;
+  }
+
+  .page-header h1 {
+    font-size: 24px;
+  }
+
+  .container .f-logo img {
+    max-width: 80%;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .body-container {
+    width: auto;
+  }
+  .attendance-table th,
+  .attendance-table td {
+    width: auto;
+  
+  }
+}
+@media only screen and (max-width: 1230px) {
+  .body-container {
+    width: auto;
+  }
+  .attendance-table th,
+  .attendance-table td {
+    width: auto;
+  }
+}
+@media only screen and (max-width: 900px) {
+  .body-container {
+    width: auto;
+    padding: 10px;
+  }
+  .attendance-table th,
+  .attendance-table td {
+    width: auto;
+  
+  }
+}

@@ -1,0 +1,325 @@
+.body-container {
+  font-family: "Inter", sans-serif;
+  border: 1px solid #ddd;
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  margin: 20px auto;
+  max-width: 900px;
+}
+
+.body-container h3 {
+  font-size: 35px;
+  text-align: center;
+}
+
+.pagination-container {
+  color: #535151cc;
+  margin-top: 20px;
+  border-top: 1px solid #ddd;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.pagination-bar {
+  margin-top: 15px;
+}
+
+.pagination-bar .pagination-button {
+  margin-right: 5px;
+  color: #535151cc;
+  cursor: pointer;
+  padding: 5px 10px;
+  border: 1px solid #ddd;
+  background-color: #fefeff;
+}
+
+.pagination-bar #page-num {
+  color: #535151cc;
+  padding: 5px 5px;
+  width: 20px;
+}
+
+.pagination-button:hover {
+  background-color: #ddd;
+}
+
+#page-size {
+  font-size: 14px;
+  color: #212b36;
+}
+
+#entries {
+  margin-left: 13px;
+  color: #535151cc;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 6px 6px;
+  width: 50px;
+}
+
+/* Table-Record */
+
+.table-record {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table-record th,
+.table-record td {
+  padding: 10px;
+  text-align: center;
+  color: #535151cc;
+}
+
+.table-record th {
+  border-top: 1px solid #ddd;;
+  border-bottom: 1px solid #ddd;;
+  /* border: 1px solid #ddd; */
+  font-size: 17px;
+}
+
+.table-record td {
+  font-size: 15px;
+}
+
+.table-record tbody tr:nth-child(even) {
+  background-color: white;
+}
+
+.table-record tbody tr:nth-child(odd) {
+  background-color: #e3e7e967;
+}
+
+.breadcrumb {
+  margin-bottom: 10px;
+  text-align: left;
+}
+
+.breadcrumb label {
+  font-family: "Inter", sans-serif;
+  font-size: 16px;
+  margin-right: 1px;
+}
+
+.breadcrumb select,
+.breadcrumb button {
+  padding: 5px 10px;
+  font-size: 16px;
+  margin-right: 10px;
+}
+
+#department {
+  border-radius: 5px;
+}
+
+#show-report {
+  background-color: #212b36;
+  margin-left: 5px;
+}
+
+.emp-type {
+  line-height: 30px;
+  border-radius: 5px;
+  cursor: not-allowed;
+  user-select: none;
+}
+
+.emp-type.full-time {
+  background-color: #2367a0; 
+  color: white;
+}
+
+.emp-type.part-time {
+  background-color: #f8b434; 
+  color: #212b36;
+}
+
+.table-record .action-button {
+  background-color: transparent;
+  color: #2367a0;
+  border: none;
+}
+
+/* Eof Table-Record */
+
+/* Popout form */
+.form-popup {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-37%, -50%);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  z-index: 9;
+}
+
+/* form-Container */
+.form-container {
+  font-family: "Inter", sans-serif;
+  max-width: 100%;
+  padding: 20px;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.form-container h1{
+  text-align: center;
+}
+
+.form-container form {
+  position: relative;
+  /* margin-top: 16px; */
+  /* min-height: 490px; */
+  overflow: hidden;
+}
+
+.form-container form .title{
+  font-weight: bolder;
+  display: block;
+  margin-top: 10px;
+  margin-bottom: 12px;
+  font-size: 16px;
+}
+
+.form-container form .fields {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.input-field {
+  display: flex;
+  width: calc(100% / 2 - 5px);
+  flex-direction: column;
+}
+
+.input-field label {
+  font-weight: bold;
+  font-size: 12px;
+  color: #2e2e2e;
+}
+
+.input-field input{
+  outline: none;
+  font-size: 14px;
+  font-weight: 400;
+  color: #333;
+  border-radius: 5px;
+  border: 1px solid #aaa;
+  padding: 0 15px;
+  height: 42px;
+}
+
+.section-divider2{
+   height: 1px;
+   background-color: #ccc;
+   margin-top: 20px;
+   margin-bottom: 20px;
+} 
+
+/* Salary Input */
+
+.card-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.card {
+  flex: 0 0 calc(50% - 10px);
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+.card-header {
+  background-color: #f1f1f1;
+  padding: 10px;
+  font-weight: bold;
+  border-bottom: 1px solid #ddd;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-body {
+  padding: 10px;
+}
+
+.create-table-btn {
+  margin-left: auto; /* Push the button to the right */
+  cursor: pointer;
+}
+
+.table-container table {
+  font-family: 'Inter', sans-serif;
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.table-container th,
+.table-container td {
+  font-size: 12px;
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: center;
+  color: #535151cc;
+}
+
+.table-container tbody tr:nth-child(even) {
+  background-color: white;
+}
+
+.table-container tbody tr:nth-child(odd) {
+  background-color: #e3e7e967;
+}
+
+.net-pay-container {
+  font-weight: bold;
+  margin-left: 5px;
+  font-family: "Inter", sans-serif;
+}
+
+/* Form button */
+.form-container button {
+  background-color: transparent;
+  color: #535151cc;
+  border: 1px solid #ddd;
+  margin-top: 10px;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
+.form-container .save-button {
+  background-color: #2367a0;
+  color: white;
+}
+
+/* eof salary inputs */
+
+.status-button {
+  line-height: 30px;
+  border-radius: 5px;
+  cursor: not-allowed;
+  user-select: none;
+}
+
+.status-button.calculated {
+  background-color:#4caf50; 
+  color: white;
+}
+
+.status-button.new{
+  background-color: #aaa9a7; 
+  color: #212b36;
+}
+
+
