@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - PMS</title>
     <!-- imports -->
-    <link rel="icon" href="{{ url('assets/images/favicon.ico')}}">
+    <link rel="icon" href="{{ url('assets/images/favicon.ico')}}"  type="image/x-icon">
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
     <script src="{{ asset('assets/js/script.js') }}"></script>
@@ -61,9 +61,9 @@
             </form>
             
       
-        <div class="forgot-password">
+       <!-- <div class="forgot-password">
             <a href="#">Forgot Password?</a>
-        </div>
+        </div> -->
     </div>
 </body>
 

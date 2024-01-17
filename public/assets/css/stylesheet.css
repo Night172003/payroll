@@ -5,7 +5,8 @@
   padding: 20px;
   border-radius: 8px;
   margin: 20px auto;
-  max-width: 900px;
+  display: inline-block;
+  max-width: 1000px;
 }
 
 .body-container h3 {
@@ -67,7 +68,7 @@
 
 .table-record th,
 .table-record td {
-  padding: 10px;
+  padding: 15px;
   text-align: center;
   color: #535151cc;
 }
@@ -75,7 +76,6 @@
 .table-record th {
   border-top: 1px solid #ddd;;
   border-bottom: 1px solid #ddd;;
-  /* border: 1px solid #ddd; */
   font-size: 17px;
 }
 
@@ -91,19 +91,18 @@
   background-color: #e3e7e967;
 }
 
-.breadcrumb {
-  margin-bottom: 10px;
+.body-header {
   text-align: left;
 }
 
-.breadcrumb label {
+.body-header label {
   font-family: "Inter", sans-serif;
   font-size: 16px;
   margin-right: 1px;
 }
 
-.breadcrumb select,
-.breadcrumb button {
+.body-header select,
+.body-header button {
   padding: 5px 10px;
   font-size: 16px;
   margin-right: 10px;
@@ -114,7 +113,6 @@
 }
 
 #show-report {
-  background-color: #212b36;
   margin-left: 5px;
 }
 
@@ -135,10 +133,19 @@
   color: #212b36;
 }
 
-.table-record .action-button {
+
+.table-record .edit-button,
+.table-record .delete-button,.table-record 
+.view-button{
   background-color: transparent;
-  color: #2367a0;
-  border: none;
+  color: #2367a0; 
+  margin: 10%; 
+  padding: 0; 
+
+}
+
+.table-record .delete-button {
+  color: #e74c3c; 
 }
 
 /* Eof Table-Record */
@@ -190,8 +197,8 @@
   justify-content: space-between;
   flex-wrap: wrap;
 }
-
 .input-field {
+
   display: flex;
   width: calc(100% / 2 - 5px);
   flex-direction: column;
@@ -238,9 +245,11 @@
 }
 
 .card-header {
-  background-color: #f1f1f1;
+  background-color: #2367a0;;
+  color: white;
+  /* background-color: #f1f1f1; */
   padding: 10px;
-  font-weight: bold;
+  /* font-weight: bold; */
   border-bottom: 1px solid #ddd;
   display: flex;
   justify-content: space-between;
@@ -251,9 +260,8 @@
   padding: 10px;
 }
 
-.create-table-btn {
-  margin-left: auto; /* Push the button to the right */
-  cursor: pointer;
+.card-header .create-table-btn {
+  color: white;
 }
 
 .table-container table {
@@ -305,6 +313,13 @@
 
 /* eof salary inputs */
 
+/* Payroll List */
+
+.add-payroll-btn {
+  margin-bottom: -10px;
+  float: right;
+}
+
 .status-button {
   line-height: 30px;
   border-radius: 5px;
@@ -313,13 +328,10 @@
 }
 
 .status-button.calculated {
+  width: 100px;
   background-color:#4caf50; 
   color: white;
 }
 
-.status-button.new{
-  background-color: #aaa9a7; 
-  color: #212b36;
-}
-
+/* Eof Payroll List */
 

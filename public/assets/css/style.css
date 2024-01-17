@@ -24,7 +24,7 @@ body {
 }
 
 .page-header {
-  color: black;
+  display: grid;
   width: 100%;
   float: left;
 }
@@ -90,11 +90,11 @@ a {
   margin-top: 10px;
 }
 
-.forgot-password {
+/* .forgot-password {
   font-size: 13px;
   text-align: center;
   margin-top: 10px;
-}
+} */
 
 .notification {
   margin-left: 6px;
@@ -161,6 +161,27 @@ a {
   color: #f4f6f8;
   background-color: #24364d;
   border: none;
+}
+
+.sidebar-menu a.active {
+  color: #f4f6f8;
+  background-color: #24364d;
+  border: none;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.logout-button {
+  position: absolute;
+  bottom: 0;
+  margin-top: 20px;
+}
+
+.logout-button a {
+  display: block;
+  color: #919eab;
+  font-size: 18px;
+  padding: 18px;
+  border-radius: 5px;
 }
 
 /* Navigation*/
@@ -242,7 +263,7 @@ a {
 
 .page-header h2 {
   padding: 10px 0 10px; 
-  text-align: center;
+  /* text-align: center; */
   font-size: 40px;
   font-weight: normal;
   margin-bottom: 5px;

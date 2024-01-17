@@ -54,6 +54,11 @@
                 <div class="section-divider1"></div>
                 <ul class="days"></ul>
             </div>
+            <div class="logout-button">
+            <form action="{{ route('logout') }}" method="POST">
+                @csrf
+                <<button type="submit" onclick="validateLogin()"> <i class="fas fa-sign-out-alt"></i> Logout</a>
+            </div>
         </div>
     </div>
 
@@ -96,7 +101,6 @@
                             <th>#</th>
                             <th>EMP ID</th>
                             <th>NAME</th>
-                            <th>DEPARTMENT</th>
                             <th>POSITION</th>
                             <th>PAY PERIOD</th>
                             <th>EMP TYPE</th>
@@ -109,7 +113,6 @@
                             <td>1</td>
                             <td>R-0000</td>
                             <td>Juan Dela Cruz</td>
-                            <td>Development</td>
                             <td>Software Developer</td>
                             <td>January 15-30</td>
                             <td class="emp-type-column">
@@ -127,7 +130,6 @@
                             <td>1</td>
                             <td>R-0000</td>
                             <td>Totoy Mola</td>
-                            <td>Development</td>
                             <td>Software Developer</td>
                             <td>January 15-30</td>
                             <td class="emp-type-column">
@@ -169,8 +171,8 @@
     </div>
     <!--  eof class body  -->
 
-    <!-- Popout Form -->
-    <div class="form-popup" id="Emp-Form">
+   <!-- Popout Form -->
+   <div class="form-popup" id="Emp-Form">
         <div class="form-container">
             <h1>EMPLOYEE PAYSLIP</h1>
             <div class="section-divider2"></div>
@@ -195,10 +197,6 @@
                         </div>
 
                         <div class="input-field">
-                            <label>Department</label>
-                            <input type="text" placeholder="Development" readonly>
-                        </div>
-                        <div class="input-field">
                             <label>Position</label>
                             <input type="text" placeholder="Software Developer" readonly>
                         </div>
@@ -222,7 +220,6 @@
                 </div>
 
                 <div class="section-divider2"></div>
-                <!-- Add the following code after the closing tag of the employee record -->
                 <!-- Salary Input -->
                 <div class="card-container">
                   <!-- Card 1 -->
@@ -264,6 +261,7 @@
         </div>
       <!-- End of Form Popup -->
     </div>
+  
   
 </body>
 

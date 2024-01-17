@@ -49,6 +49,11 @@
                 <div class="section-divider1"></div>
                 <ul class="days"></ul>
             </div>
+            <div class="logout-button">
+            <form action="{{ route('logout') }}" method="POST">
+                @csrf
+                <<button type="submit" onclick="validateLogin()"> <i class="fas fa-sign-out-alt"></i> Logout</a>
+            </div>
         </div>
     </div>
 
@@ -78,10 +83,10 @@
             <div class="body-container">
                 <h3>ATTENDANCE LOGS</h3>
                 <div class="body-header">
-                    <label for="date-range">Select Range</label>
-                    <input type="date" id="date" value="current-date">
-                    
-                    <input type="text" id="myInput" onkeyup="searchFunction()" placeholder="Search Employee" title="Search employee">
+                   <!--<label for="date-range">Select Range</label> 
+                    <input type="date" id="date" value="current-date"> -->
+                    <label>Select:</label>
+                    <input type="text" id="myInput" onkeyup="searchFunction()" placeholder="Employee Name" title="Search employee">
                  
                 </div>
 
@@ -97,48 +102,27 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <!-- Sample row, you can dynamically populate this with data from your backend -->
-                        <tr>
-                            <td>1</td>
-                            <td>R-0000</td>
-                            <td>Juan Dela Cruz</td>
-                            <td>Software Developer</td>
-                            <td>12:12</td>
-                            <td class="emp-type-column">
-                                <div class="emp-type full-time">Full-time</div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>R-0000</td>
-                            <td>Juan Dela Cruz</td>
-                            <td>Software Developer</td>
-                            <td>11:11</td>
-                            <td class="emp-type-column">
-                                <div class="emp-type part-time">Part-time</div>
-                            </td>
-                        </tr>
-                        <!-- Add more rows as needed -->
+                    @foreach($attendanceData as $attendance)
+                    <tr>
+                        <td>{{ $attendance['id'] }}</td>
+                        <td>{{ $attendance['emp_id'] }}</td>
+                        <td>{{ $attendance['name'] }}</td>
+                        <td>{{ $attendance['position'] }}</td>
+                        <td>{{ $attendance['working_hours'] }}</td>
+                        <td>{{ $attendance['emp_type'] }}</td>
+                    </tr>
+                        @endforeach
+                        
+
                     </tbody>
                 </table>
 
+                    </tbody>
+                </table>
+
+
                 <!-- PAGINATION -->
-                <div class="pagination-container">
-                    <div class="pagination-bar">
-                        <button class="pagination-button"><i class="fas fa-chevron-left"></i></button>
-                        <button class="pagination-button">Prev</button>
-                        <button class="pagination-button">Next</button>
-                        <label for="page-num">Page:
-                            <input type="text" id="page-num" placeholder="1">
-                        </label>
-                        <span id="page-size">of 5</span>
-                        <select id="entries" name="entries">
-                            <option value="entries">5</option>
-                            <option value="entries">10</option>
-                            <option value="entries">15</option>
-                        </select>
-                    </div>
-                </div>
+               
                 <!-- EOF PAGINATION -->
             </div> <!--  eof body container -->
         </div> <!--  eof page header  -->

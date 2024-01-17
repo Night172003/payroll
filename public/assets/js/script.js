@@ -1,16 +1,16 @@
-document.addEventListener("DOMContentLoaded", function () {
-    var savedUsername = localStorage.getItem("savedUsername");
-    var savedPassword = localStorage.getItem("savedPassword");
-    var rememberMeCheckbox = document.getElementById("rememberMe");
-    var usernameInput = document.getElementById("username");
-    var passwordInput = document.getElementById("password");
+// document.addEventListener("DOMContentLoaded", function () {
+//     var savedUsername = localStorage.getItem("savedUsername");
+//     var savedPassword = localStorage.getItem("savedPassword");
+//     var rememberMeCheckbox = document.getElementById("rememberMe");
+//     var usernameInput = document.getElementById("username");
+//     var passwordInput = document.getElementById("password");
 
-    // If saved credentials exist and the "Remember Me" checkbox is checked, populate the form
-    if (savedUsername && savedPassword && rememberMeCheckbox.checked) {
-        usernameInput.value = savedUsername;
-        passwordInput.value = savedPassword;
-    }
-});
+ 
+//     if (savedUsername && savedPassword && rememberMeCheckbox.checked) {
+//         usernameInput.value = savedUsername;
+//         passwordInput.value = savedPassword;
+//     }
+// });
 
 function validateLogin() {
     var usernameInput = document.getElementById("username");
@@ -27,21 +27,18 @@ function validateLogin() {
         return;
     }
 
-    // Additional validation if needed
-
-    // Example: Check if username is "admin" and password is "password"
     if (username === "admin" && password === "password") {
-        // Save credentials to local storage if "Remember Me" is checked
+      
         if (rememberMeCheckbox.checked) {
             localStorage.setItem("savedUsername", username);
             localStorage.setItem("savedPassword", password);
         } else {
-            // Clear saved credentials if "Remember Me" is unchecked
+          
             localStorage.removeItem("savedUsername");
             localStorage.removeItem("savedPassword");
         }
 
-        // Redirect to index.html after successful login
+        
         window.location.href = "home.html";
     } else {
         displayNotification("Invalid username or password.", "error");
@@ -70,6 +67,64 @@ window.addEventListener('keydown', function (event) {
         validateLogin(); 
     }
 });
+const currentPage = window.location.pathname;
+const links = document.querySelectorAll('.sidebar-menu a');
+
+links.forEach(link => {
+  if (link.getAttribute('href') === currentPage) {
+    link.classList.add('active');
+  }
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+    // Get the current page URL
+    var currentUrl = window.location.href;
+
+    // Get all sidebar links
+    var sidebarLinks = document.querySelectorAll(".sidebar-menu a");
+
+    // Remove the 'active' class from all links
+    sidebarLinks.forEach(function (link) {
+        link.classList.remove("active");
+    });
+
+    // Loop through each link and check if it matches the current URL
+    sidebarLinks.forEach(function (link) {
+        if (link.href === currentUrl) {
+            // Add the 'active' class to the matching link
+            link.classList.add("active");
+        }
+    });
+});
+//Delete icon
+  function deleteRow(button) {
+    var row = button.closest('tr');
+    row.remove();
+  }
+
+//Search Employee within the Employee Payslip
+function searchFunction() {
+    // Declare variables
+    var input, filter, table, tr, td, i, txtValue;
+    input = document.getElementById("myInput");
+    filter = input.value.trim().toUpperCase(); // Trim extra spaces from the input
+    table = document.getElementById("employee-records");
+    tr = table.getElementsByTagName("tr");
+
+    // Loop through all table rows, and hide those that don't match the search query
+    for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[2]; 
+        if (td) {
+            txtValue = td.textContent || td.innerText;
+            txtValue = txtValue.trim().toUpperCase(); // Trim extra spaces from the table cell content
+            if (txtValue.indexOf(filter) > -1) {
+                tr[i].style.display = "";
+            } else {
+                tr[i].style.display = "none";
+            }
+        }
+    }
+}
 
 
 // Popup form
@@ -130,13 +185,13 @@ $(document).ready(function () {
 
         // If the table already exists, add a new row
         if (existingTable.length > 0) {
-            var newRow = '<tr><td><button class="delete-row-btn"><i class="fas fa-trash-alt"></i></button></td><td contenteditable="true"></td><td contenteditable="true" class="amount-input" oninput="validateNumberInput(this)"></td></tr>';
+            var newRow = '<tr><td contenteditable="true"></td><td contenteditable="true" class="amount-input" oninput="validateNumberInput(this)"></td><td><button class="delete-row-btn"><i class="fas fa-trash-alt"></i></button></td></tr>';
             existingTable.find('tbody').append(newRow);
         } else {
             // Create a table with editable rows
             var tableHtml = '<table>';
-            tableHtml += '<thead><tr><th>Delete</th><th>Title</th><th>Amount</th></tr></thead>';
-            tableHtml += '<tbody><tr><td><button class="delete-row-btn"><i class="fas fa-trash-alt"></i></button></td><td contenteditable="true"></td><td contenteditable="true" class="amount-input" oninput="validateNumberInput(this)"></td></tr></tbody>';
+            tableHtml += '<thead><tr><th>Title</th><th>Amount</th><th></th></tr></thead>';
+            tableHtml += '<tbody><tr><td contenteditable="true"></td><td contenteditable="true" class="amount-input" oninput="validateNumberInput(this)"></td><td><button class="delete-row-btn"><i class="fas fa-trash-alt"></i></button></td></tr></tbody>';
             tableHtml += '</table>';
 
             // Append the table to the table container

@@ -43,6 +43,11 @@
               <div class="section-divider1"></div>
               <ul class="days"></ul>
             </div>
+            <div class="logout-button">
+            <form action="{{ route('logout') }}" method="POST">
+                @csrf
+                <button type="submit" onclick="validateLogin()"> <i class="fas fa-sign-out-alt"></i> Logout</a>
+            </div>
           </div>
     </div>
     
@@ -51,11 +56,7 @@
             <li>
                 <div class="user">
                     <img src="{{ url('assets/images/users/dj.jpg')}}"/>
-                    <span class="online-indicator"></span>
-                    <!-- temporary logout na mukang shit -->
-                    <form action="{{ route('logout') }}" method="POST">
-                        @csrf
-                        <button type="submit" onclick="validateLogin()">logout <span class="icon-arrow-next icon-white"></span></button>
+                    <span class="online-indicator"></span>                  
                         <span>Daniel Ford Padilla</span>
                         <span class="sm">Administrator</span>
                     </a>

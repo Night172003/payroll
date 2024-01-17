@@ -56,7 +56,8 @@ public function loginUser(Request $request)
         }
     } else {
         // Handle the case when the API response is not successful
-        return redirect()->route('login')->with('error', 'Invalid credentials');
+        $errorMessage = $response->json('error_message', 'Invalid credentials');
+        return redirect()->route('login')->with('error', $errorMessage);
     }
 }
 

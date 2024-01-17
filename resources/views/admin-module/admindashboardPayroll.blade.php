@@ -53,6 +53,11 @@
                 <div class="section-divider1"></div>
                 <ul class="days"></ul>
             </div>
+            <div class="logout-button">
+            <form action="{{ route('logout') }}" method="POST">
+                @csrf
+                <<button type="submit" onclick="validateLogin()"> <i class="fas fa-sign-out-alt"></i> Logout</a>
+            </div>
         </div>
     </div>
 
