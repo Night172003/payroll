@@ -3,6 +3,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CustomAuthController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AttendanceController;
+use App\Http\Controllers\PayslipController;
+use App\Http\Controllers\PayrollController;
 
 
 /*
@@ -20,6 +22,6 @@ Route::get('/adminDashboard',[CustomAuthController::class,'adminDashboard'])->na
 Route::get('/userDashboard',[CustomAuthController::class,'userDashboard'])->name('userDashboard');
 
 Route::get('/admindashboardAttendance',[AttendanceController::class,'showTable'])->name('admindashboardAttendance');
-Route::get('/admindashboardEmployees',[AdminController::class,'admindashboardEmployees'])->name('admindashboardEmployees');
-Route::get('/admindashboardPayroll',[AdminController::class,'admindashboardPayroll'])->name('admindashboardPayroll');
+Route::get('/admindashboardPayslip',[PayslipController::class,'showTable'])->name('admindashboardPayslip');
+Route::get('/admindashboardPayroll',[PayrollController::class,'showTable'])->name('admindashboardPayroll');
 

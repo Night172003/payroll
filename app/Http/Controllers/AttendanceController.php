@@ -32,7 +32,7 @@ class AttendanceController extends Controller
             $attendanceData = new LengthAwarePaginator($currentItems, count($attendanceData), $perPage);
 
             return view('admin-module.admindashboardAttendance',compact('attendanceData'));
-}
+            }
 
             
     }

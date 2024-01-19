@@ -28,7 +28,7 @@
         <ul class="sidebar-menu">
                 <li><a href="{{ route('adminDashboard') }}" class="active"><i class="fa-solid fa-house-user"></i> Home</a></li>
                 <li><a href="{{ route('admindashboardAttendance') }}"><i class="fa-regular fa-calendar-check"></i> Attendance</a></li>
-                <li><a href="{{ route('admindashboardEmployees') }}"><i class="fa fa-user-tie"></i> Employees</a></li>
+                <li><a href="{{ route('admindashboardPayslip') }}"><i class="fa fa-user-tie"></i> Employees</a></li>
                 <li><a href="{{ route('admindashboardPayroll') }}"><i class="fa-solid fa-file-invoice-dollar"></i> Payroll</a></li>
         </ul>
 
@@ -109,39 +109,24 @@
                     </thead>
                     <tbody>
                         <!-- Sample row, you can dynamically populate this with data from your backend -->
+                        @foreach($payslipData as $payslip)
                         <tr>
-                            <td>1</td>
-                            <td>R-0000</td>
-                            <td>Juan Dela Cruz</td>
-                            <td>Software Developer</td>
-                            <td>January 15-30</td>
-                            <td class="emp-type-column">
-                                <div class="emp-type full-time">Full-time</div>
-                            </td>
-                            <td>
+                        
+                        <td>{{ $payslip['id'] }}</td>
+                        <td>{{ $payslip['emp_id'] }}</td>
+                        <td>{{ $payslip['name'] }}</td>
+                        <td>{{ $payslip['position'] }}</td>
+                        <td>{{ $payslip['pay_period'] }}</td>
+                        <td>{{ $payslip['emp_type'] }}</td>
+                        <td>
                                 <div class="action-buttons">
                                 <button class="action-button edit-button" onclick="openForm()"><i class="fa-regular fa-pen-to-square"></i></button>
                                 <button class="action-button delete-button" onclick="deleteRow(this)"><i class="fa-regular fa-trash-can"></i></button>
                                 </div>
                             </td>
-                        </tr>
-
-                        <tr>
-                            <td>1</td>
-                            <td>R-0000</td>
-                            <td>Totoy Mola</td>
-                            <td>Software Developer</td>
-                            <td>January 15-30</td>
-                            <td class="emp-type-column">
-                                <div class="emp-type full-time">Full-time</div>
-                            </td>
-                            <td>
-                                <div class="action-buttons">
-                                <button class="action-button edit-button" onclick="openForm()"><i class="fa-regular fa-pen-to-square"></i></button>
-                                <button class="action-button delete-button" onclick="deleteRow(this)"><i class="fa-regular fa-trash-can"></i></button>
-                                </div>
-                            </td>
-                        </tr>
+                    </tr>
+                        @endforeach
+                        
                     </tbody>
                 </table>
 

@@ -25,7 +25,7 @@
             <ul class="sidebar-menu">
                 <li><a href="{{ route('adminDashboard') }}" class="active"><i class="fa-solid fa-house-user"></i> Home</a></li>
                 <li><a href="{{ route('admindashboardAttendance') }}"><i class="fa-regular fa-calendar-check"></i> Attendance</a></li>
-                <li><a href="{{ route('admindashboardEmployees') }}"><i class="fa fa-user-tie"></i> Employees</a></li>
+                <li><a href="{{ route('admindashboardPayslip') }}"><i class="fa fa-user-tie"></i> Employees</a></li>
                 <li><a href="{{ route('admindashboardPayroll') }}"><i class="fa-solid fa-file-invoice-dollar"></i> Payroll</a></li>
             </ul>
         <div class="wrapper">
@@ -55,8 +55,9 @@
         <ul class="navigation">    
             <li>
                 <div class="user">
-                    <img src="{{ url('assets/images/users/dj.jpg')}}"/>
-                    <span class="online-indicator"></span>                  
+                <img src="{{ url('assets/images/users/dj.jpg')}}" />
+                    <span class="online-indicator"></span>
+                    <a href="login.html" class="name">
                         <span>Daniel Ford Padilla</span>
                         <span class="sm">Administrator</span>
                     </a>

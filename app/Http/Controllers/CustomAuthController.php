@@ -4,7 +4,6 @@ namespace App\Http\Controllers\api;
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
-use App\Http\Controllers\AdminAttendanceController;
 use Illuminate\Support\Facades\Http;
 
 use Hash;

@@ -28,7 +28,7 @@
         <ul class="sidebar-menu">
             <li><a href="{{ route('adminDashboard') }}"><i class="fa-solid fa-house-user"></i> Home</a></li>
             <li><a href="{{ route('admindashboardAttendance') }}"><i class="fa-regular fa-calendar-check"></i> Attendance</a></li>
-            <li><a href="{{ route('admindashboardEmployees') }}"><i class="fa fa-user-tie"></i> Employees</a></li>
+            <li><a href="{{ route('admindashboardPayslip') }}"><i class="fa fa-user-tie"></i> Employees</a></li>
             <li><a href="{{ route('admindashboardPayroll') }}"><i class="fa-solid fa-file-invoice-dollar"></i> Payroll</a></li>
         </ul>
 
@@ -109,15 +109,15 @@
                     </thead>
                     <tbody>
                         <!-- Sample row, you can dynamically populate this with data from your backend -->
+                        @foreach($payrollData as $payroll)
                         <tr>
-                            <td>1</td>
-                            <td>2023-001</td>
-                            <td>Janury </td>
-                            <td>15</td>
-                            <td>30</td>
-                            <td class="status-column">
-                                <div class="status-button calculated">Calculated</div>
-                            </td>
+                        <td>{{ $payroll['id'] }}</td>
+                        <td>{{ $payroll['ref_no'] }}</td>
+                        <td>{{ $payroll['month'] }}</td>
+                        <td>{{ $payroll['date_from'] }}</td>
+                        <td>{{ $payroll['date_to'] }}</td>
+                        <td>{{ $payroll['status'] }}</td>
+                        
                             <td>
                                 <div class="action-buttons">
                                     <button class="action-button view-button" onclick="viewForm()"><i class="fa-regular fa-eye"></i></button>
@@ -125,7 +125,7 @@
                                 </div>
                             </td>
                         </tr>
-                        
+                        @endforeach
                        
                     </tbody>
                 </table>

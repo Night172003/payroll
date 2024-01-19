@@ -24,7 +24,7 @@
         <ul class="sidebar-menu">
                 <li><a href="{{ route('adminDashboard') }}" class="active"><i class="fa-solid fa-house-user"></i> Home</a></li>
                 <li><a href="{{ route('admindashboardAttendance') }}"><i class="fa-regular fa-calendar-check"></i> Attendance</a></li>
-                <li><a href="{{ route('admindashboardEmployees') }}"><i class="fa fa-user-tie"></i> Employees</a></li>
+                <li><a href="{{ route('admindashboardPayslip') }}"><i class="fa fa-user-tie"></i> Employees</a></li>
                 <li><a href="{{ route('admindashboardPayroll') }}"><i class="fa-solid fa-file-invoice-dollar"></i> Payroll</a></li>
         </ul>
 
@@ -122,7 +122,23 @@
 
 
                 <!-- PAGINATION -->
-               
+                <div class="pagination-container">
+                    <div class="pagination-bar">
+                        <button class="pagination-button"><i class="fas fa-chevron-left"></i>
+                        </button>
+                        <button class="pagination-button">Prev</button>
+                        <button class="pagination-button">Next</button>
+                        <label for="page-num">Page:
+                            <input type="text" id="page-num" placeholder="1" />
+                        </label>
+                        <span id="page-size">of 5</span>
+                        <select id="entries" name="entries">
+                            <option value="entries">5</option>
+                            <option value="entries">10</option>
+                            <option value="entries">15</option>
+                        </select>
+                    </div>
+                </div>
                 <!-- EOF PAGINATION -->
             </div> <!--  eof body container -->
         </div> <!--  eof page header  -->
