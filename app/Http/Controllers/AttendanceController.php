@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Pagination\LengthAwarePaginator;
+use App\Models\AdminEmpPayslip;
+
 
 class AttendanceController extends Controller
 {
@@ -14,26 +16,18 @@ class AttendanceController extends Controller
         return view("admin-module.admindashboardAttendance");
     }
 
-    public function showTable()
+    public function showTable(Request $request)
     {
-        // Make a request to the API endpoint
-        $response = Http::get('http://127.0.0.1:8080/api/attendance/info');
+        try {
+            $attendanceData = AdminEmpPayslip::all();  // Adjust the query based on your needs
 
-        // Check if the API request is successful
-        if ($response->successful()) {
-            // Extract the data from the API response and save it into an array
-            $attendanceData = [];
-            $attendanceData = $response->json();
+            return view('admin-module.admindashboardAttendance', compact('attendanceData'));
+        } catch (\Exception $e) {
+            // Log the error
+            \Log::error('Error in showTable function: ' . $e->getMessage());
 
-             // Paginate the data
-            $currentPage = LengthAwarePaginator::resolveCurrentPage();
-            $perPage = 5;
-            $currentItems = array_slice($attendanceData, ($currentPage - 1) * $perPage, $perPage);
-            $attendanceData = new LengthAwarePaginator($currentItems, count($attendanceData), $perPage);
-
-            return view('admin-module.admindashboardAttendance',compact('attendanceData'));
-            }
-
-            
+            // Return a response with an error message
+            return back()->with('error', 'An error occurred while fetching attendance data. Please try again.');
+        }
     }
 }

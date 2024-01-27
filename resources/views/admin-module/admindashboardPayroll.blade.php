@@ -6,11 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Admin - PMS</title>
     <!-- imports -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofP+g5R4LcDA2D2QQknDd9NIfY4EUL2n" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+        integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofP+g5R4LcDA2D2QQknDd9NIfY4EUL2n" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <link href="https://fonts.googleapis.com/css?family=Inter" rel="stylesheet" />
     <script src="https://kit.fontawesome.com/852106c7be.js" crossorigin="anonymous"></script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet" />
@@ -23,13 +25,15 @@
 <body>
     <div class="sidebar">
         <div class="logo-container">
-            <a href="home.html"><img src="{{ url('assets/images/Logo2.png')}}" alt="Logo" class="sidebar-logo"></a>
+            <a href="{{ route('adminDashboard') }}"><img src="{{ url('assets/images/Logo2.png')}}" alt="Logo" class="sidebar-logo"></a>
         </div>
         <ul class="sidebar-menu">
             <li><a href="{{ route('adminDashboard') }}"><i class="fa-solid fa-house-user"></i> Home</a></li>
-            <li><a href="{{ route('admindashboardAttendance') }}"><i class="fa-regular fa-calendar-check"></i> Attendance</a></li>
+            <li><a href="{{ route('admindashboardAttendance') }}"><i class="fa-regular fa-calendar-check"></i>
+                    Attendance</a></li>
             <li><a href="{{ route('admindashboardPayslip') }}"><i class="fa fa-user-tie"></i> Employees</a></li>
-            <li><a href="{{ route('admindashboardPayroll') }}"><i class="fa-solid fa-file-invoice-dollar"></i> Payroll</a></li>
+            <li><a href="{{ route('admindashboardPayroll') }}"><i class="fa-solid fa-file-invoice-dollar"></i>
+                    Payroll</a></li>
         </ul>
 
         <div class="wrapper">
@@ -53,10 +57,11 @@
                 <div class="section-divider1"></div>
                 <ul class="days"></ul>
             </div>
-            <div class="logout-button">
-            <form action="{{ route('logout') }}" method="POST">
-                @csrf
-                <<button type="submit" onclick="validateLogin()"> <i class="fas fa-sign-out-alt"></i> Logout</a>
+            <div class="sidebar-menu">
+                <form action="{{ route('logout') }}" method="POST">
+                    @csrf
+                    <button type="submit" onclick="validateLogin()"> <i class="fas fa-sign-out-alt"></i> Logout</button>
+                </form>
             </div>
         </div>
     </div>
@@ -67,7 +72,7 @@
                 <div class="user">
                     <img src="{{ url('assets/images/users/dj.jpg')}}" />
                     <span class="online-indicator"></span>
-                    <a href="login.html" class="name">
+                    <a href="#" class="name">
                         <span>Daniel Ford Padilla</span>
                         <span class="sm">Administrator</span>
                     </a>
@@ -89,9 +94,8 @@
                 <div class="body-header">
                     <label for="date-range">Select Range</label>
                     <input type="month" id="bdaymonth" name="bdaymonth">
-                   
-                    
-                    <input type="text" id="myInput" onkeyup="RefFunction()" placeholder="Search Reference No." title="Search employee">
+                    <input type="text" id="myInput" onkeyup="RefFunction()" placeholder="Search Reference No."
+                        title="Search employee">
                     <button class="add-payroll-btn">+</button>
                 </div>
 
@@ -111,147 +115,25 @@
                         <!-- Sample row, you can dynamically populate this with data from your backend -->
                         @foreach($payrollData as $payroll)
                         <tr>
-                        <td>{{ $payroll['id'] }}</td>
-                        <td>{{ $payroll['ref_no'] }}</td>
-                        <td>{{ $payroll['month'] }}</td>
-                        <td>{{ $payroll['date_from'] }}</td>
-                        <td>{{ $payroll['date_to'] }}</td>
-                        <td>{{ $payroll['status'] }}</td>
-                        
+                            <td>{{ $payroll['id'] }}</td>
+                            <td>{{ $payroll['ref_no'] }}</td>
+                            <td>{{ $payroll['month'] }}</td>
+                            <td>{{ $payroll['date_from'] }}</td>
+                            <td>{{ $payroll['date_to'] }}</td>
+                            <td>{{ $payroll['status'] }}</td>
                             <td>
                                 <div class="action-buttons">
-                                    <button class="action-button view-button" onclick="viewForm()"><i class="fa-regular fa-eye"></i></button>
-                                    <button class="action-button delete-button" onclick="deleteRow(this)"><i class="fa-regular fa-trash-can"></i></button>
+                                    <button class="action-button view-button" onclick="viewForm()"><i
+                                            class="fa-regular fa-eye"></i></button>
+                                    <button class="action-button delete-button" onclick="deleteRow(this)"><i
+                                            class="fa-regular fa-trash-can"></i></button>
                                 </div>
                             </td>
                         </tr>
                         @endforeach
-                       
                     </tbody>
                 </table>
-
-                <!-- PAGINATION -->
-                <div class="pagination-container">
-                    <div class="pagination-bar">
-                        <button class="pagination-button"><i class="fas fa-chevron-left"></i>
-                        </button>
-                        <button class="pagination-button">Prev</button>
-                        <button class="pagination-button">Next</button>
-                        <label for="page-num">Page:
-                            <input type="text" id="page-num" placeholder="1" />
-                        </label>
-                        <span id="page-size">of 5</span>
-                        <select id="entries" name="entries">
-                            <option value="entries">5</option>
-                            <option value="entries">10</option>
-                            <option value="entries">15</option>
-                        </select>
-                    </div>
-                </div>
-                <!-- EOF PAGINATION -->
             </div>
-            <!--  eof attendance container -->
         </div>
-        <!--  eof page header  -->
     </div>
-    <!--  eof class body  -->
-
-    <!-- Popout Form -->
-    <div class="form-popup" id="Emp-Form">
-        <div class="form-container">
-            <h1>PAYROLL LIST</h1>
-            <div class="section-divider2"></div>
-
-            <!-- Employee Details -->
-            <form action="#">
-                <div class="employee record">
-                    <!-- <span class="title">Employee De    ````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````s</span> -->
-                    <div class="fields">
-                        <div class="input-field">
-                            <label>Employee ID</label>
-                            <input type="text" placeholder="R-0000" readonly>
-                        </div>
-
-                        <div class="input-field">
-                            <label>Full Name</label>
-                            <input type="text" placeholder="Juan Dela C. Cruz" readonly>
-                        </div>
-                        <div class="input-field">
-                            <label>Status</label>
-                            <input type="text" placeholder="Full-time" readonly>
-                        </div>
-
-                        <div class="input-field">
-                            <label>Department</label>
-                            <input type="text" placeholder="Development" readonly>
-                        </div>
-                        <div class="input-field">
-                            <label>Position</label>
-                            <input type="text" placeholder="Software Developer" readonly>
-                        </div>
-
-                        <div class="input-field">
-                            <label>Present Days</label>
-                            <input type="number" placeholder="0" readonly>
-                        </div>
-
-                        
-                        <div class="input-field">
-                            <label>Month Period</label>
-                            <input type="number" placeholder="January,2021" readonly>
-                        </div>
-
-                        <div class="input-field">
-                            <label>Basic Salary</label>
-                            <input type="number" placeholder="Enter Amount" required>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="section-divider2"></div>
-                <!-- Add the following code after the closing tag of the employee record -->
-                <!-- Salary Input -->
-                <div class="card-container">
-                  <!-- Card 1 -->
-                  <div class="card">
-                    <div class="card-header">Allowance<button class="create-table-btn">+</button></div>
-                    <div class="card-body">
-                      <div class="table-container"></div>
-                      <p>Total Allowance: 0</p>
-                      </div>  
-                    </div>
-                  
-                
-                  <!-- Card 2 -->
-                  <div class="card">
-                    <div class="card-header">Deduction<button class="create-table-btn">+</button></div>
-                    <div class="card-body">
-                      <div class="table-container"></div>
-                      <p>Total Deduction: 0 </p>
-                    </div>
-                  </div>
-                </div>
-                  <!-- eof card-container -->
-            </form>
-
-               <!-- Net Pay -->
-               <div class="net-pay-container">
-              <label for="net-pay">Net Pay: 0</label>
-            </div>
-            <div class="section-divider2"></div>
-         
-                    <!-- Save button -->
-                    <div class="button-container">
-                        <button type="button" class="save-button" onclick="saveForm()">Update</button>
-                        <button type="button" class="close-button" onclick="closeForm()">Close</button>
-                    </div>
-                 <!-- End of Save button --> 
-            </div>
-            <!-- End of form Container -->
-        </div>
-      <!-- End of Form Popup -->
-    </div>
-  
 </body>
-
-</html>

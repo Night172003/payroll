@@ -47,7 +47,7 @@ public function loginUser(Request $request)
                 return view("admin-module.admindashboard");
             } else {
                 // Redirect to user dashboard
-                return redirect()->route('userDashboard');
+                return redirect()->route('userDashboardPayslip');
             }
         } else {
             // Handle the case when the logged-in user is not found in the response
@@ -77,9 +77,9 @@ public function adminDashboard()
     }
 
     
-public function userDashboard()
+public function userDashboardPayslip()
 {
-    return "Welcome to the user dashboard!";
+    return view("user-module.userdashboardPayslip");
 }
 
 }

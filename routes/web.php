@@ -5,7 +5,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\PayslipController;
 use App\Http\Controllers\PayrollController;
-
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,9 +19,16 @@ Route::post('/logout',[CustomAuthController::class,'logout'])->name('logout');
 
 
 Route::get('/adminDashboard',[CustomAuthController::class,'adminDashboard'])->name('adminDashboard');
-Route::get('/userDashboard',[CustomAuthController::class,'userDashboard'])->name('userDashboard');
 
 Route::get('/admindashboardAttendance',[AttendanceController::class,'showTable'])->name('admindashboardAttendance');
+
 Route::get('/admindashboardPayslip',[PayslipController::class,'showTable'])->name('admindashboardPayslip');
+Route::get('/admindashboardPayslip/fetch', [PayslipController::class, 'fetchDataAndSave'])->name('fetchdata');
+Route::get('/employee/{empId}', [PayslipController::class, 'getEmployeeDataByEmpId']);
+
+
 Route::get('/admindashboardPayroll',[PayrollController::class,'showTable'])->name('admindashboardPayroll');
 
+
+Route::get('/userDashboardPayslip',[UserController::class,'userDashboardPayslip'])->name('userDashboardPayslip');
+Route::get('/userDashboardPayrollHistory',[UserController::class,'userDashboardPayrollHistory'])->name('userDashboardPayrollHistory');

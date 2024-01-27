@@ -24,11 +24,7 @@ class PayrollController extends Controller
             $payrollData = [];
             $payrollData = $response->json();
 
-             // Paginate the data
-            $currentPage = LengthAwarePaginator::resolveCurrentPage();
-            $perPage = 5;
-            $currentItems = array_slice($payrollData, ($currentPage - 1) * $perPage, $perPage);
-            $payrollData = new LengthAwarePaginator($currentItems, count($payrollData), $perPage);
+             
 
             return view('admin-module.admindashboardPayroll',compact('payrollData'));
         } 

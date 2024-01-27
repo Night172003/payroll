@@ -32,7 +32,7 @@
             <img src="{{ URL::to('assets/images/f-logo.png') }}" alt="Logo">
         </div>
         <div class="page-header">
-            <h1>QuickTech <small>Payroll Management System - Admin Module</small></h1>
+            <h1>QuickTech <small>Payroll Management System -Login</small></h1>
         </div>
         
         <div class="notification" id="notification"></div>

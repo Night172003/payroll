@@ -7,6 +7,8 @@
   margin: 20px auto;
   display: inline-block;
   max-width: 1000px;
+  max-height: 480px; /* Adjust the height as needed */
+  overflow-y: auto;
 }
 
 .body-container h3 {
@@ -159,12 +161,23 @@
   transform: translate(-37%, -50%);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   z-index: 9;
+  max-height: 80vh; /* Set a maximum height for the popup */
+  overflow-y: auto;
 }
 
 /* form-Container */
 .form-container {
   font-family: "Inter", sans-serif;
   max-width: 100%;
+  padding: 20px;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  overflow: hidden;
+}
+.form-container2 {
+  font-family: "Inter", sans-serif;
+  max-width: 150%;
   padding: 20px;
   background-color: white;
   border: 1px solid #ddd;
@@ -200,7 +213,7 @@
 .input-field {
 
   display: flex;
-  width: calc(100% / 2 - 5px);
+  width: 400px;
   flex-direction: column;
 }
 
@@ -335,3 +348,18 @@
 
 /* Eof Payroll List */
 
+.employeerecord {
+  display: flex;
+  align-items: center;
+}
+
+.employeerecord .fields {
+  flex: 1;
+}
+
+.employeerecord .divider {
+  height: 100%;
+  width: 2px;
+  background-color: #ccc;
+  margin: 0 20px;
+}

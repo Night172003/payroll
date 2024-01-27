@@ -5,27 +5,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin - PMS</title>
-    <!-- imports -->
+    <!-- Imports -->
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
     <link href='https://fonts.googleapis.com/css?family=Inter' rel='stylesheet'>
-    <script src="https://kit.fontawesome.com/852106c7be.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{{ asset('assets/css/stylesheet.css') }}">
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
     <link rel="icon" href="{{ url('assets/images/favicon.ico')}}" type="image/x-icon">
-    <link rel="stylesheet" href="{{ asset('assets/css/stylesheet.css') }}">
+    <script src="https://kit.fontawesome.com/852106c7be.js" crossorigin="anonymous"></script>
     <script src="{{ asset('assets/js/calendar_script.js') }}" defer></script>
     <script src="{{ asset('assets/js/script.js') }}"></script>
+</head>
 
 <body>
     <div class="sidebar">
         <div class="logo-container">
-            <a href="home.html"><img src="{{ url('assets/images/Logo2.png')}}" alt="Logo" class="sidebar-logo"></a>
+            <a href="{{ route('adminDashboard') }}"><img src="{{ url('assets/images/Logo2.png')}}" alt="Logo" class="sidebar-logo"></a>
         </div>
         <ul class="sidebar-menu">
-                <li><a href="{{ route('adminDashboard') }}" class="active"><i class="fa-solid fa-house-user"></i> Home</a></li>
-                <li><a href="{{ route('admindashboardAttendance') }}"><i class="fa-regular fa-calendar-check"></i> Attendance</a></li>
-                <li><a href="{{ route('admindashboardPayslip') }}"><i class="fa fa-user-tie"></i> Employees</a></li>
-                <li><a href="{{ route('admindashboardPayroll') }}"><i class="fa-solid fa-file-invoice-dollar"></i> Payroll</a></li>
+            <li><a href="{{ route('adminDashboard') }}" class="active"><i class="fa-solid fa-house-user"></i> Home</a></li>
+            <li><a href="{{ route('admindashboardAttendance') }}"><i class="fa-regular fa-calendar-check"></i> Attendance</a></li>
+            <li><a href="{{ route('admindashboardPayslip') }}"><i class="fa fa-user-tie"></i> Employees</a></li>
+            <li><a href="{{ route('admindashboardPayroll') }}"><i class="fa-solid fa-file-invoice-dollar"></i> Payroll</a></li>
         </ul>
 
         <div class="wrapper">
@@ -49,10 +50,11 @@
                 <div class="section-divider1"></div>
                 <ul class="days"></ul>
             </div>
-            <div class="logout-button">
-            <form action="{{ route('logout') }}" method="POST">
-                @csrf
-                <<button type="submit" onclick="validateLogin()"> <i class="fas fa-sign-out-alt"></i> Logout</a>
+            <div class="sidebar-menu">
+                <form action="{{ route('logout') }}" method="POST">
+                    @csrf
+                    <button type="submit" onclick="validateLogin()"><i class="fas fa-sign-out-alt"></i> Logout</button>
+                </form>
             </div>
         </div>
     </div>
@@ -63,7 +65,7 @@
                 <div class="user">
                     <img src="{{ url('assets/images/users/dj.jpg')}}" />
                     <span class="online-indicator"></span>
-                    <a href="login.html" class="name">
+                    <a href="#" class="name">
                         <span>Daniel Ford Padilla</span>
                         <span class="sm">Administrator</span>
                     </a>
@@ -83,11 +85,10 @@
             <div class="body-container">
                 <h3>ATTENDANCE LOGS</h3>
                 <div class="body-header">
-                   <!--<label for="date-range">Select Range</label> 
+                    <!--<label for="date-range">Select Range</label>
                     <input type="date" id="date" value="current-date"> -->
                     <label>Select:</label>
                     <input type="text" id="myInput" onkeyup="searchFunction()" placeholder="Employee Name" title="Search employee">
-                 
                 </div>
 
                 <table class="table-record" id="employee-records">
@@ -97,60 +98,30 @@
                             <th>EMP ID</th>
                             <th>NAME</th>
                             <th>POSITION</th>
-                            <th>WORKING HOURS</th>
+                            <th>DATE</th>
+                            <th>PUNCH IN</th>
+                            <th>PUNCH OUT</th>
                             <th>EMP TYPE</th>
                         </tr>
                     </thead>
                     <tbody>
-                    @foreach($attendanceData as $attendance)
-                    <tr>
-                        <td>{{ $attendance['id'] }}</td>
-                        <td>{{ $attendance['emp_id'] }}</td>
-                        <td>{{ $attendance['name'] }}</td>
-                        <td>{{ $attendance['position'] }}</td>
-                        <td>{{ $attendance['working_hours'] }}</td>
-                        <td>{{ $attendance['emp_type'] }}</td>
-                    </tr>
+                        @foreach($attendanceData as $attendance)
+                        <tr>
+                            <td>{{ $attendance['id'] }}</td>
+                            <td>{{ $attendance['EmpID'] }}</td>
+                            <td>{{ $attendance['FirstName'] }}</td>
+                            <td>{{ $attendance['JobName'] }}</td>
+                            <td>{{ $attendance['Date'] }}</td>
+                            <td>{{ $attendance['PunchIn'] }}</td> 
+                            <td>{{ $attendance['PunchOut'] }}</td>
+                            <td>{{ $attendance['EmpType'] }}</td>
+                        </tr>
                         @endforeach
-                        
-
                     </tbody>
                 </table>
-
-                    </tbody>
-                </table>
-
-
-                <!-- PAGINATION -->
-                <div class="pagination-container">
-                    <div class="pagination-bar">
-                        <button class="pagination-button"><i class="fas fa-chevron-left"></i>
-                        </button>
-                        <button class="pagination-button">Prev</button>
-                        <button class="pagination-button">Next</button>
-                        <label for="page-num">Page:
-                            <input type="text" id="page-num" placeholder="1" />
-                        </label>
-                        <span id="page-size">of 5</span>
-                        <select id="entries" name="entries">
-                            <option value="entries">5</option>
-                            <option value="entries">10</option>
-                            <option value="entries">15</option>
-                        </select>
-                    </div>
-                </div>
-                <!-- EOF PAGINATION -->
             </div> <!--  eof body container -->
         </div> <!--  eof page header  -->
     </div> <!--  eof class body  -->
 </body>
 
 </html>
-
-   <!-- <button id="show-report">Show Report</button> -->
-                    <!-- <label for="department">Department</label>
-                    <select id="department" name="department">
-                        <option value="full-stack">Development</option>
-                        <option value="front-end">QUality Assurance</option>
-                        <option value="backend">Project Management</option>
-                    </select> -->

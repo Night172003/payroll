@@ -18,12 +18,13 @@
     <link rel="stylesheet" href="{{ asset('assets/css/stylesheet.css') }}">
     <script src="{{ asset('assets/js/calendar_script.js') }}" defer></script>
     <script src="{{ asset('assets/js/script.js') }}"></script>
+    
 </head>
 
 <body>
     <div class="sidebar">
         <div class="logo-container">
-            <a href="home.html"><img src="{{ url('assets/images/Logo2.png')}}" alt="Logo" class="sidebar-logo"></a>
+            <a href="{{ route('adminDashboard') }}"><img src="{{ url('assets/images/Logo2.png')}}" alt="Logo" class="sidebar-logo"></a>
         </div>
         <ul class="sidebar-menu">
                 <li><a href="{{ route('adminDashboard') }}" class="active"><i class="fa-solid fa-house-user"></i> Home</a></li>
@@ -54,10 +55,11 @@
                 <div class="section-divider1"></div>
                 <ul class="days"></ul>
             </div>
-            <div class="logout-button">
+            <div class="sidebar-menu">
             <form action="{{ route('logout') }}" method="POST">
-                @csrf
-                <<button type="submit" onclick="validateLogin()"> <i class="fas fa-sign-out-alt"></i> Logout</a>
+                    @csrf
+                    <button type="submit" onclick="validateLogin()"> <i class="fas fa-sign-out-alt"></i> Logout</button>
+                </form>
             </div>
         </div>
     </div>
@@ -68,7 +70,7 @@
                 <div class="user">
                     <img src="{{ url('assets/images/users/dj.jpg')}}" />
                     <span class="online-indicator"></span>
-                    <a href="login.html" class="name">
+                    <a href="#" class="name">
                         <span>Daniel Ford Padilla</span>
                         <span class="sm">Administrator</span>
                     </a>
@@ -92,7 +94,7 @@
                         <input type="month" id="bdaymonth" name="bdaymonth">
 
                         <input type="text" id="myInput" onkeyup="searchFunction()" placeholder="Search Employee" title="Search employee">
-                        <button class="add-payroll-btn">+</button>
+                        <button class="add-payroll-btn" id="fetchAndSaveLink" href="{{ route('fetchdata') }}" method ="post">Update List</button>
                     </div>
 
                 <table class="table-record" id="employee-records">
@@ -100,27 +102,27 @@
                         <tr>
                             <th>#</th>
                             <th>EMP ID</th>
-                            <th>NAME</th>
+                            <th>FULL NAME</th>
                             <th>POSITION</th>
-                            <th>PAY PERIOD</th>
                             <th>EMP TYPE</th>
+                            <th>PAY PERIOD</th>
                             <th>ACTION</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <!-- Sample row, you can dynamically populate this with data from your backend -->
-                        @foreach($payslipData as $payslip)
-                        <tr>
+                        
+                    @foreach($payslipData->unique('EmpID') as $payslip)
+                    <tr data-emp-id="{{ $payslip['EmpID'] }}">
                         
                         <td>{{ $payslip['id'] }}</td>
-                        <td>{{ $payslip['emp_id'] }}</td>
-                        <td>{{ $payslip['name'] }}</td>
-                        <td>{{ $payslip['position'] }}</td>
-                        <td>{{ $payslip['pay_period'] }}</td>
-                        <td>{{ $payslip['emp_type'] }}</td>
+                        <td>{{ $payslip['EmpID'] }}</td>
+                        <td>{{ implode(' ', [$payslip['FirstName'], $payslip['MiddleName'], $payslip['LastName']]) }}</td>
+                        <td>{{ $payslip['JobName'] }}</td>
+                        <td>{{ $payslip['EmpType'] }}</td>
+                        <td></td>
                         <td>
                                 <div class="action-buttons">
-                                <button class="action-button edit-button" onclick="openForm()"><i class="fa-regular fa-pen-to-square"></i></button>
+                                <button class="action-button edit-button" onclick="openForm(this)"><i class="fa-regular fa-pen-to-square"></i></button>
                                 <button class="action-button delete-button" onclick="deleteRow(this)"><i class="fa-regular fa-trash-can"></i></button>
                                 </div>
                             </td>
@@ -130,25 +132,6 @@
                     </tbody>
                 </table>
 
-                <!-- PAGINATION -->
-                <div class="pagination-container">
-                    <div class="pagination-bar">
-                        <button class="pagination-button"><i class="fas fa-chevron-left"></i>
-                        </button>
-                        <button class="pagination-button">Prev</button>
-                        <button class="pagination-button">Next</button>
-                        <label for="page-num">Page:
-                            <input type="text" id="page-num" placeholder="1" />
-                        </label>
-                        <span id="page-size">of 5</span>
-                        <select id="entries" name="entries">
-                            <option value="entries">5</option>
-                            <option value="entries">10</option>
-                            <option value="entries">15</option>
-                        </select>
-                    </div>
-                </div>
-                <!-- EOF PAGINATION -->
             </div>
             <!--  eof attendance container -->
         </div>
@@ -169,33 +152,39 @@
                     <div class="fields">
                         <div class="input-field">
                             <label>Employee ID</label>
-                            <input type="text" placeholder="R-0000" readonly>
+                            <input type="text" id="empIdInput" placeholder="R-0000" readonly>
                         </div>
 
                         <div class="input-field">
-                            <label>Full Name</label>
-                            <input type="text" placeholder="Juan Dela C. Cruz" readonly>
+                            <label>First Name</label>
+                            <input type="text" id="FirstNameInput" placeholder="Juan Dela C. Cruz" readonly >
                         </div>
+
                         <div class="input-field">
-                            <label>Status</label>
-                            <input type="text" placeholder="Full-time" readonly>
+                            <label>Employee Type</label>
+                            <input type="text" id="EmpTypeInput" placeholder="Full-time" readonly>
                         </div>
 
                         <div class="input-field">
                             <label>Position</label>
-                            <input type="text" placeholder="Software Developer" readonly>
+                            <input type="text" id="PositionInput" placeholder="Software Developer" readonly>
                         </div>
-
+                        
                         <div class="input-field">
                             <label>Present Days</label>
-                            <input type="number" placeholder="0" readonly>
+                            <input type="number" id="FirstNameInput" placeholder="0" readonly>
                         </div>
 
                         
                         <div class="input-field">
-                            <label>Pay Period</label>
-                            <input type="number" placeholder="January 15-30, 2023" readonly>
+                            <label>Pay Period Start Date</label>
+                            <input type="date" id="PayPeriodStartDate">
                         </div>
+
+                        <div class="input-field">
+                            <label>Pay Period End Date</label>
+                            <input type="date" id="PayPeriodEndDate">
+                        </div> 
 
                         <div class="input-field">
                             <label>Basic Salary</label>
@@ -247,7 +236,82 @@
       <!-- End of Form Popup -->
     </div>
   
-  
-</body>
+    </body>
+    
+        <script>
+        document.getElementById('fetchAndSaveLink').addEventListener('click', function(event) {
+            event.preventDefault();  // Prevent the default link behavior (page navigation)
 
+            fetch("{{ route('fetchdata') }}", {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    // Add any other headers as needed
+                },
+            })
+            .then(response => response.json())
+        .then(data => {
+            // Handle the response data, e.g., display a message to the user
+            console.log(data.message);
+            location.reload();
+
+            // Display a popup message
+            alert('Database has been updated!');
+
+        })
+        .catch(error => {
+            console.error('Error:', error);
+
+            // Display an error message if needed
+            alert('An error occurred while updating the database.');
+        });
+    });
+    
+    function openForm(button) {
+        console.log('Button clicked!');
+        if (!(button instanceof Element && button instanceof HTMLButtonElement)) {
+            console.error('Invalid button element.');
+            return;
+        }
+
+        // Get the clicked row
+        var row = button.closest('tr');
+
+        // Get the EMP ID from the data attribute
+        var empId = row.getAttribute('data-emp-id');
+
+        // Fetch data based on EMP ID from your backend (you may use AJAX)
+        fetchDataFromBackend(empId)
+            .then(data => {
+                // Update the form fields with the fetched data
+                document.getElementById('empIdInput').value = data.EmpID;
+                document.getElementById('FirstNameInput').value = data.FirstName+ ' ' + data.MiddleName+ ' ' +data.LastName;
+                document.getElementById('EmpTypeInput').value = data.EmpType;
+                document.getElementById('PositionInput').value = data.JobName;
+
+                // Update other fields as needed
+
+                // Open the form
+                document.getElementById('Emp-Form').style.display = 'block';
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+                // Handle error as needed
+            });
+    }
+
+    function fetchDataFromBackend(empId) {
+        // Use your backend endpoint to fetch data based on EMP ID
+        // Replace '/employee/' with the actual path to your Laravel route
+        return fetch(`/employee/${empId}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                return response.json();
+            });
+    }
+
+
+    </script>
 </html>

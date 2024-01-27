@@ -127,14 +127,27 @@ function searchFunction() {
 }
 
 
-// Popup form
-function openForm() {
-    document.getElementById("Emp-Form").style.display = "block";
-}
+//Popup form
+// function openForm() {
+//     document.getElementById("Emp-Form").style.display = "block";
+// }
 
 function closeForm() {
     document.getElementById("Emp-Form").style.display = "none";
 }
+
+function openaddEmpForm() {
+    document.getElementById("Emp-Add-Form").style.display = "block";
+}
+
+function closeEmpForm() {
+    document.getElementById("Emp-Add-Form").style.display = "none";
+}
+
+function saveEmpForm() {
+    closeEmpForm();
+}
+
 
 function validateNumberInput(event) {
     var input = event.target;
@@ -215,25 +228,13 @@ $(document).ready(function () {
         checkRowCountAndAddScrollbar(tableContainer);
     });
 
-    function checkRowCountAndAddScrollbar(tableContainer) {
-        var rowCount = tableContainer.find('tbody tr').length;
 
-        // Adjust max-height and overflow properties based on the row count
-        if (rowCount > 3) {
-            tableContainer.css({
-                'max-height': '200px',  // Set your desired max-height
-                'overflow-y': 'auto'
-            });
-        } else {
-            tableContainer.css({
-                'max-height': 'none',
-                'overflow-y': 'visible'
-            });
-        }
-    }
+
+
+
+
+
+    
 });
-
-
-
 
 
