@@ -29,11 +29,9 @@
         </div>
         <ul class="sidebar-menu">
             <li><a href="{{ route('adminDashboard') }}"><i class="fa-solid fa-house-user"></i> Home</a></li>
-            <li><a href="{{ route('admindashboardAttendance') }}"><i class="fa-regular fa-calendar-check"></i>
-                    Attendance</a></li>
-            <li><a href="{{ route('admindashboardPayslip') }}"><i class="fa fa-user-tie"></i> Employees</a></li>
-            <li><a href="{{ route('admindashboardPayroll') }}"><i class="fa-solid fa-file-invoice-dollar"></i>
-                    Payroll</a></li>
+            <li><a href="{{ route('admindashboardAttendance') }}"><i class="fa-regular fa-calendar-check"></i> Attendance</a></li>
+            <li><a href="{{ route('admindashboardPayslipSalary') }}"><i class="fa fa-user-tie"></i> Set Salary</a></li>
+            <li><a href="{{ route('admindashboardPayroll') }}"><i class="fa-solid fa-file-invoice-dollar"></i> Payslip</a></li>
         </ul>
 
         <div class="wrapper">

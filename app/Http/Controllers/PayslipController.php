@@ -18,50 +18,90 @@ class PayslipController extends Controller
     public function showTable()
     {
         // Retrieve data from the AdminEmpPayslip model
-        $payslipData = AdminEmpPayslip::all();  // Adjust the query based on your needs
+        $adminEmpPayslips = AdminEmpPayslip::all();  // Adjust the query based on your needs
 
-        return view('admin-module.admindashboardPayslip', compact('payslipData'));
+        return view('admin-module.admindashboardPayslipSalary', compact('adminEmpPayslips'));
     }
 
     public function fetchDataAndSave()
     {
-        // Make API request
-        $response = Http::get('http://127.0.0.1:8080/api/EmpPayslip/info');
-        $apiData = $response->json();
+        try {
+            // Make API request
+            $response = Http::get('http://127.0.0.1:8001/api/get-employee-data');
     
-        // Save data to database
-        foreach ($apiData['allEmployeePaySlips'] as $data) {
-            \App\Models\AdminEmpPayslip::updateOrCreate(
-                ['id' => $data['id']], // Assuming 'id' is a unique identifier
-                [
-                    'EmpID' => $data['EmpID'],
-                    'FirstName' => $data['FirstName'],
-                    'MiddleName' => $data['MiddleName'],
-                    'LastName' => $data['LastName'],
-                    'JobName' => $data['JobName'],
-                    'EmpType' => $data['EmpType'],
-                    'Date' => $data['Date'],
-                    'PunchIn' => $data['PunchIn'],
-                    'PunchOut' => $data['PunchOut'],
-                ]
-            );
+            // Check if the request was successful
+            if ($response->successful()) {
+                $apiData = $response->json();
+    
+                // Save data to database
+                foreach ($apiData['employees'] as $employeeData) {
+                    // Extracting relevant data from the JSON structure
+                    $employee = $employeeData;
+                    $job = $employeeData['job'];
+                    $loginCredential = $employeeData['login_credential'];
+                    $attendance = isset($employeeData['employee_attendance'][0]) ? $employeeData['employee_attendance'][0] : null;
+                    $leave = isset($employeeData['leave'][0]) ? $employeeData['leave'][0] : null;
+    
+                    \App\Models\AdminEmpPayslip::updateOrCreate(
+                        ['EmpID' => $employee['EmpID']], // Assuming 'EmpID' is a unique identifier
+                        [
+                            // Include other fields as needed
+                            'EmpID' => $employee['EmpID'],
+                            'CredID' => $employee['CredID'],
+                            'JobID' => $employee['JobID'],
+                            'LastName' => $employee['LastName'],
+                            'FirstName' => $employee['FirstName'],
+                            'MiddleName' => $employee['MiddleName'],
+                            'Birthday' => $employee['Birthday'],
+                            'Address' => $employee['Address'],
+                            'PhoneNumber' => $employee['PhoneNumber'],
+                            'EmpType' => $employee['EmpType'],
+                            'JobName' => $job['JobName'],
+                            'JobDescription' => $job['JobDescription'],
+                            'Email' => $loginCredential['email'],
+                            'PunchIn' => optional($attendance)['PunchIn'],
+                            'PunchOut' => optional($attendance)['PunchOut'],
+                            'StartDate' => optional($leave)['StartDate'],
+                            'EndDate' => optional($leave)['EndDate'],
+                            'Reason' => optional($leave)['Reason'],
+                            'Status' => optional($leave)['Status'],
+                        ]
+                    );
+                }
+    
+                return response()->json(['message' => 'Data fetched from API and saved to the database.']);
+            } else {
+                return response()->json(['error' => 'API request failed.'], 500);
+            }
+        } catch (\Exception $e) {
+            // Log the error
+            \Log::error('Error in fetchDataAndSave function: ' . $e->getMessage());
+    
+            // Return an error response
+            return response()->json(['error' => 'An error occurred.'], 500);
         }
-    
-        return response()->json(['message' => 'Data fetched from API and saved to the database.']);
-
     }
-    
-    public function getEmployeeDataByEmpId($empId)
-    {
+
+    public function getEmployeeDataByEmpID($EmpID)
+{
+    try {
         // Retrieve employee data based on EmpID
-        $employeeData = AdminEmpPayslip::where('EmpID', $empId)->first();
+        $employeeData = AdminEmpPayslip::where('EmpID', $EmpID)->first();
 
-        if ($employeeData) {
-            return response()->json($employeeData);
-        } else {
-            return response()->json(['error' => 'Employee not found'], 404);
+        if (!$employeeData) {
+            return response()->json(['error' => 'Employee not found for EmpID: ' . $EmpID], 404);
         }
+
+        return response()->json(['data' => $employeeData]);
+    } catch (\Exception $e) {
+        // Log the error
+        \Log::error('Error in getEmployeeDataByEmpID function: ' . $e->getMessage());
+
+        // Return a more detailed error response
+        return response()->json(['error' => 'An error occurred. Check the logs for details.'], 500);
     }
+}
+
 
 }
         

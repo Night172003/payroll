@@ -19,9 +19,14 @@ class AttendanceController extends Controller
     public function showTable(Request $request)
     {
         try {
-            $attendanceData = AdminEmpPayslip::all();  // Adjust the query based on your needs
+            // Make API request
+            $response = Http::get('http://127.0.0.1:8001/api/get-employee-data');
+            $apiData = $response->json();
 
-            return view('admin-module.admindashboardAttendance', compact('attendanceData'));
+            // Assuming the API response contains an array of employees
+            $employees = $apiData['employees'] ?? [];
+
+            return view('admin-module.admindashboardAttendance', compact('employees'));
         } catch (\Exception $e) {
             // Log the error
             \Log::error('Error in showTable function: ' . $e->getMessage());
@@ -30,4 +35,5 @@ class AttendanceController extends Controller
             return back()->with('error', 'An error occurred while fetching attendance data. Please try again.');
         }
     }
+
 }

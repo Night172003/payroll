@@ -41,13 +41,19 @@ public function loginUser(Request $request)
 
         // Check if a user is found
         if ($loggedInUser) {
-            // Check if 'is_admin' is equal to 1
-            if ($loggedInUser["is_admin"] === 1) {
-                // Redirect to admin dashboard
-                return view("admin-module.admindashboard");
+            // Check if the password matches
+            if ($request->password === $loggedInUser['password']) {
+                // Check if 'is_admin' is equal to 1
+                if ($loggedInUser["is_admin"] === 1) {
+                    // Redirect to admin dashboard
+                    return view("admin-module.admindashboard");
+                } else {
+                    // Redirect to user dashboard
+                    return view("user-module.userDashboardPayslip");
+                }
             } else {
-                // Redirect to user dashboard
-                return redirect()->route('userDashboardPayslip');
+                // Handle the case when the password doesn't match
+                return redirect()->route('login')->with('error', 'Invalid credentials');
             }
         } else {
             // Handle the case when the logged-in user is not found in the response

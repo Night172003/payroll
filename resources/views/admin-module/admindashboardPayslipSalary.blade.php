@@ -29,8 +29,8 @@
         <ul class="sidebar-menu">
                 <li><a href="{{ route('adminDashboard') }}" class="active"><i class="fa-solid fa-house-user"></i> Home</a></li>
                 <li><a href="{{ route('admindashboardAttendance') }}"><i class="fa-regular fa-calendar-check"></i> Attendance</a></li>
-                <li><a href="{{ route('admindashboardPayslip') }}"><i class="fa fa-user-tie"></i> Employees</a></li>
-                <li><a href="{{ route('admindashboardPayroll') }}"><i class="fa-solid fa-file-invoice-dollar"></i> Payroll</a></li>
+                <li><a href="{{ route('admindashboardPayslipSalary') }}"><i class="fa fa-user-tie"></i> Set Salary</a></li>
+                <li><a href="{{ route('admindashboardPayroll') }}"><i class="fa-solid fa-file-invoice-dollar"></i> Payslip</a></li>
         </ul>
 
 
@@ -88,11 +88,10 @@
             <div class="section-divider"></div>
 
                 <div class="body-container">
-                    <h3>EMPLOYEE PAYSLIP</h3>
+                    <h3>EMPLOYEE PAYSLIPS</h3>
                     <div class="body-header">
-                        <label for="bdaymonth">Select Range</label>
-                        <input type="month" id="bdaymonth" name="bdaymonth">
-
+                        
+                        <label for="bdaymonth">Select Name:</label>
                         <input type="text" id="myInput" onkeyup="searchFunction()" placeholder="Search Employee" title="Search employee">
                         <button class="add-payroll-btn" id="fetchAndSaveLink" href="{{ route('fetchdata') }}" method ="post">Update List</button>
                     </div>
@@ -105,29 +104,29 @@
                             <th>FULL NAME</th>
                             <th>POSITION</th>
                             <th>EMP TYPE</th>
-                            <th>PAY PERIOD</th>
+                            <th>SALARY</th>
+                            <th>NET SALARY</th>
                             <th>ACTION</th>
                         </tr>
                     </thead>
                     <tbody>
                         
-                    @foreach($payslipData->unique('EmpID') as $payslip)
-                    <tr data-emp-id="{{ $payslip['EmpID'] }}">
-                        
-                        <td>{{ $payslip['id'] }}</td>
-                        <td>{{ $payslip['EmpID'] }}</td>
-                        <td>{{ implode(' ', [$payslip['FirstName'], $payslip['MiddleName'], $payslip['LastName']]) }}</td>
-                        <td>{{ $payslip['JobName'] }}</td>
-                        <td>{{ $payslip['EmpType'] }}</td>
+                    @foreach ($adminEmpPayslips as $employeeData)
+                    <tr>
+                        <td>{{$employeeData['id']}}</td>
+                        <td>{{ $employeeData['EmpID'] }}</td>
+                        <td>{{ $employeeData['FirstName'] . ' ' .$employeeData['MiddleName'] .' '.$employeeData['LastName'] }}</td>
+                        <td>{{ $employeeData['JobName'] }}</td>
+                        <td>{{ $employeeData['EmpType'] }}</td>
+                 	    <td></td>
                         <td></td>
-                        <td>
-                                <div class="action-buttons">
-                                <button class="action-button edit-button" onclick="openForm(this)"><i class="fa-regular fa-pen-to-square"></i></button>
-                                <button class="action-button delete-button" onclick="deleteRow(this)"><i class="fa-regular fa-trash-can"></i></button>
-                                </div>
-                            </td>
+			            <td>
+                            <div class="action-buttons">
+                            <button class="action-button edit-button" data-empid="{{ $employeeData['EmpID'] }}" onclick="openForm(this)"><i class="fa-regular fa-pen-to-square"></i></button>
+                            </div>
+                        </td>
                     </tr>
-                        @endforeach
+                   @endforeach
                         
                     </tbody>
                 </table>
@@ -152,7 +151,7 @@
                     <div class="fields">
                         <div class="input-field">
                             <label>Employee ID</label>
-                            <input type="text" id="empIdInput" placeholder="R-0000" readonly>
+                            <input type="text" id="EmpIdInput" placeholder="R-0000" readonly>
                         </div>
 
                         <div class="input-field">
@@ -167,7 +166,7 @@
 
                         <div class="input-field">
                             <label>Position</label>
-                            <input type="text" id="PositionInput" placeholder="Software Developer" readonly>
+                            <input type="text" id="JobNameInput" placeholder="Software Developer" readonly>
                         </div>
                         
                         <div class="input-field">
@@ -178,17 +177,17 @@
                         
                         <div class="input-field">
                             <label>Pay Period Start Date</label>
-                            <input type="date" id="PayPeriodStartDate">
+                            <input type="date" id="PayPeriodStartDate"  readonly>
                         </div>
 
                         <div class="input-field">
                             <label>Pay Period End Date</label>
-                            <input type="date" id="PayPeriodEndDate">
+                            <input type="date" id="PayPeriodEndDate"  readonly>
                         </div> 
 
                         <div class="input-field">
                             <label>Basic Salary</label>
-                            <input type="number" placeholder="Enter Amount" required>
+                            <input type="number" placeholder="Enter Amount" required readonly>
                         </div>
                     </div>
                 </div>
@@ -238,35 +237,29 @@
   
     </body>
     
-        <script>
-        document.getElementById('fetchAndSaveLink').addEventListener('click', function(event) {
-            event.preventDefault();  // Prevent the default link behavior (page navigation)
+    <script>
+    document.getElementById('fetchAndSaveLink').addEventListener('click', function (event) {
+        event.preventDefault();
 
-            fetch("{{ route('fetchdata') }}", {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    // Add any other headers as needed
-                },
-            })
-            .then(response => response.json())
-        .then(data => {
-            // Handle the response data, e.g., display a message to the user
-            console.log(data.message);
-            location.reload();
-
-            // Display a popup message
-            alert('Database has been updated!');
-
+        fetch("{{ route('fetchdata') }}", {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                // Add any other headers as needed
+            },
         })
-        .catch(error => {
-            console.error('Error:', error);
-
-            // Display an error message if needed
-            alert('An error occurred while updating the database.');
-        });
+            .then(response => response.json())
+            .then(data => {
+                console.log(data.message);
+                location.reload();
+                alert('Database has been updated!');
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred while updating the database.');
+            });
     });
-    
+
     function openForm(button) {
         console.log('Button clicked!');
         if (!(button instanceof Element && button instanceof HTMLButtonElement)) {
@@ -276,20 +269,18 @@
 
         // Get the clicked row
         var row = button.closest('tr');
-
         // Get the EMP ID from the data attribute
-        var empId = row.getAttribute('data-emp-id');
+        EmpID = button.getAttribute('data-empid');
 
         // Fetch data based on EMP ID from your backend (you may use AJAX)
-        fetchDataFromBackend(empId)
+        fetchDataFromBackend(EmpID)
             .then(data => {
                 // Update the form fields with the fetched data
-                document.getElementById('empIdInput').value = data.EmpID;
-                document.getElementById('FirstNameInput').value = data.FirstName+ ' ' + data.MiddleName+ ' ' +data.LastName;
-                document.getElementById('EmpTypeInput').value = data.EmpType;
-                document.getElementById('PositionInput').value = data.JobName;
-
-                // Update other fields as needed
+                document.getElementById('EmpIdInput').value = data.data.EmpID;
+                document.getElementById('FirstNameInput').value = `${data.data.FirstName} ${data.data.MiddleName} ${data.data.LastName}`;
+                document.getElementById('EmpTypeInput').value = data.data.EmpType;
+                document.getElementById('JobNameInput').value = data.data.JobName;
+                
 
                 // Open the form
                 document.getElementById('Emp-Form').style.display = 'block';
@@ -300,10 +291,10 @@
             });
     }
 
-    function fetchDataFromBackend(empId) {
+    function fetchDataFromBackend(EmpID) {
         // Use your backend endpoint to fetch data based on EMP ID
         // Replace '/employee/' with the actual path to your Laravel route
-        return fetch(`/employee/${empId}`)
+        return fetch(`/employee/${EmpID}`)
             .then(response => {
                 if (!response.ok) {
                     throw new Error(`HTTP error! Status: ${response.status}`);
@@ -312,6 +303,7 @@
             });
     }
 
+</script>
 
-    </script>
+  
 </html>

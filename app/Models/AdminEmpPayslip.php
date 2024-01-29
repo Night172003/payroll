@@ -9,16 +9,12 @@ class AdminEmpPayslip extends Model
 {
     use HasFactory;
 
+    protected $table = 'admin_emp_payslips';
+
     protected $fillable = [
-        'id',
-        'EmpID',
-        'FirstName',
-        'MiddleName',
-        'LastName',
-        'JobName',
-        'EmpType',
-        'Date',
-        'PunchIn',
-        'PunchOut',
+        'EmpID', 'CredID', 'JobID', 'LastName', 'FirstName', 'MiddleName',
+        'Birthday', 'Address', 'PhoneNumber', 'EmpType',
+        'JobName', 'JobDescription', 'Email', 'PunchIn', 'PunchOut',
+        'StartDate', 'EndDate', 'Reason', 'Status',
     ];
 }

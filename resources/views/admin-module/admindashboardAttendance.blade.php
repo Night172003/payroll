@@ -25,8 +25,8 @@
         <ul class="sidebar-menu">
             <li><a href="{{ route('adminDashboard') }}" class="active"><i class="fa-solid fa-house-user"></i> Home</a></li>
             <li><a href="{{ route('admindashboardAttendance') }}"><i class="fa-regular fa-calendar-check"></i> Attendance</a></li>
-            <li><a href="{{ route('admindashboardPayslip') }}"><i class="fa fa-user-tie"></i> Employees</a></li>
-            <li><a href="{{ route('admindashboardPayroll') }}"><i class="fa-solid fa-file-invoice-dollar"></i> Payroll</a></li>
+            <li><a href="{{ route('admindashboardPayslipSalary') }}"><i class="fa fa-user-tie"></i> Set Salary</a></li>
+            <li><a href="{{ route('admindashboardPayroll') }}"><i class="fa-solid fa-file-invoice-dollar"></i> Payslip</a></li>
         </ul>
 
         <div class="wrapper">
@@ -87,8 +87,11 @@
                 <div class="body-header">
                     <!--<label for="date-range">Select Range</label>
                     <input type="date" id="date" value="current-date"> -->
-                    <label>Select:</label>
+                    <label>Select Name:</label>
                     <input type="text" id="myInput" onkeyup="searchFunction()" placeholder="Employee Name" title="Search employee">
+                    <label>Select Date:</label>
+                    <input type="Date" id="myInput1" oninput="searchFunctionDate()" placeholder="Search by Date">
+
                 </div>
 
                 <table class="table-record" id="employee-records">
@@ -105,18 +108,34 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($attendanceData as $attendance)
-                        <tr>
-                            <td>{{ $attendance['id'] }}</td>
-                            <td>{{ $attendance['EmpID'] }}</td>
-                            <td>{{ $attendance['FirstName'] }}</td>
-                            <td>{{ $attendance['JobName'] }}</td>
-                            <td>{{ $attendance['Date'] }}</td>
-                            <td>{{ $attendance['PunchIn'] }}</td> 
-                            <td>{{ $attendance['PunchOut'] }}</td>
-                            <td>{{ $attendance['EmpType'] }}</td>
-                        </tr>
+                        @php
+                            $attendanceFound = false;
+                        @endphp
+
+                        @foreach($employees as $employee)
+                            @if(isset($employee['employee_attendance']) && is_array($employee['employee_attendance']) && count($employee['employee_attendance']) > 0)
+                                @foreach($employee['employee_attendance'] as $attendance)
+                                    <tr>
+                                        <td>{{ $attendance['AttendanceID'] }}</td>
+                                        <td>{{ $employee['EmpID'] }}</td>
+                                        <td>{{ implode(' ', [$employee['FirstName'], $employee['MiddleName'], $employee['LastName']]) }}</td>
+                                        <td>{{ $employee['job']['JobName'] }}</td>
+                                        <td>{{ $attendance['Date'] }}</td>
+                                        <td>{{ $attendance['PunchIn'] }}</td> 
+                                        <td>{{ $attendance['PunchOut'] }}</td>
+                                        <td>{{ $employee['EmpType'] }}</td>
+                                    </tr>
+                                    @php
+                                        $attendanceFound = true;
+                                    @endphp
+                                @endforeach
+                            @endif
                         @endforeach
+                        @if (!$attendanceFound)
+                            <tr>
+                                <td colspan="8">No attendance records to show for any employee</td>
+                            </tr>
+                        @endif
                     </tbody>
                 </table>
             </div> <!--  eof body container -->

@@ -22,9 +22,9 @@ Route::get('/adminDashboard',[CustomAuthController::class,'adminDashboard'])->na
 
 Route::get('/admindashboardAttendance',[AttendanceController::class,'showTable'])->name('admindashboardAttendance');
 
-Route::get('/admindashboardPayslip',[PayslipController::class,'showTable'])->name('admindashboardPayslip');
+Route::get('/admindashboardPayslipSalary',[PayslipController::class,'showTable'])->name('admindashboardPayslipSalary');
 Route::get('/admindashboardPayslip/fetch', [PayslipController::class, 'fetchDataAndSave'])->name('fetchdata');
-Route::get('/employee/{empId}', [PayslipController::class, 'getEmployeeDataByEmpId']);
+Route::get('/employee/{EmpID}', [PayslipController::class, 'getEmployeeDataByEmpId']);
 
 
 Route::get('/admindashboardPayroll',[PayrollController::class,'showTable'])->name('admindashboardPayroll');

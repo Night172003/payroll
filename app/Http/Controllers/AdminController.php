@@ -21,9 +21,9 @@ class AdminController extends Controller
      } 
 
     /* To Display Employee */
-    public function adminDashboardPayslip() 
+    public function adminDashboardPayslipSalary() 
      { 
-         return view("admin-module.admindashboardPayslip"); 
+         return view("admin-module.admindashboardPayslipSalary"); 
       }  
 
      /* To Display Employee Payroll  */

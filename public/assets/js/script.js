@@ -126,6 +126,30 @@ function searchFunction() {
     }
 }
 
+function searchFunctionDate() {
+    // Declare variables
+    var input, filter, table, tr, td, i, txtValue, dateColumnIndex;
+    
+    input = document.getElementById("myInput1");
+    filter = input.value.trim().toUpperCase(); // Trim extra spaces from the input
+    table = document.getElementById("employee-records");
+    tr = table.getElementsByTagName("tr");
+    dateColumnIndex = 4; // Adjust this value to match the index of the date column
+
+    // Loop through all table rows, and hide those that don't match the search query
+    for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[dateColumnIndex];
+        if (td) {
+            txtValue = td.textContent || td.innerText;
+            txtValue = txtValue.trim().toUpperCase(); // Trim extra spaces from the table cell content
+            if (txtValue.indexOf(filter) > -1) {
+                tr[i].style.display = "";
+            } else {
+                tr[i].style.display = "none";
+            }
+        }
+    }
+}
 
 //Popup form
 // function openForm() {
