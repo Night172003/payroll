@@ -17,4 +17,9 @@ class AdminEmpPayslip extends Model
         'JobName', 'JobDescription', 'Email', 'PunchIn', 'PunchOut',
         'StartDate', 'EndDate', 'Reason', 'Status',
     ];
+
+    public function empAttendances()
+    {
+        return $this->hasMany(EmpAttendance::class, 'emp_id', 'EmpID');
+    }
 }

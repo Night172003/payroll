@@ -55,26 +55,19 @@
                 <div class="section-divider1"></div>
                 <ul class="days"></ul>
             </div>
-            <div class="sidebar-menu">
-            <form action="{{ route('logout') }}" method="POST">
-                    @csrf
-                    <button type="submit" onclick="validateLogin()"> <i class="fas fa-sign-out-alt"></i> Logout</button>
-                </form>
-            </div>
+            
         </div>
     </div>
 
     <div class="body">
         <ul class="navigation">
             <li>
-                <div class="user">
-                    <img src="{{ url('assets/images/users/dj.jpg')}}" />
-                    <span class="online-indicator"></span>
-                    <a href="#" class="name">
-                        <span>Daniel Ford Padilla</span>
-                        <span class="sm">Administrator</span>
-                    </a>
-                </div>
+                <div class="sidebar-menu">
+                <form action="{{ route('logout') }}" method="POST">
+                    @csrf
+                    <button type="submit" onclick="validateLogin()"> <i class="fas fa-sign-out-alt"></i> Logout</button>
+                </form>
+            </div>
             </li>
         </ul>
 
@@ -83,7 +76,9 @@
                 <h2>Payroll Management System <small>ADMIN PANEL</small></h2>
             </div>
             <ul class="sub-header">
-                <li>EMPLOYEE PAYSLIP | Welcome Back Administrator!</li>
+                <li>EMPLOYEE PAYSLIP | Welcome Back Administrator!<br>
+                    Don't forget to Update List!
+                </li>
             </ul>
             <div class="section-divider"></div>
 
@@ -118,7 +113,7 @@
                         <td>{{ $employeeData['FirstName'] . ' ' .$employeeData['MiddleName'] .' '.$employeeData['LastName'] }}</td>
                         <td>{{ $employeeData['JobName'] }}</td>
                         <td>{{ $employeeData['EmpType'] }}</td>
-                 	    <td></td>
+                        <td></td>
                         <td></td>
 			            <td>
                             <div class="action-buttons">
@@ -171,23 +166,22 @@
                         
                         <div class="input-field">
                             <label>Present Days</label>
-                            <input type="number" id="FirstNameInput" placeholder="0" readonly>
+                            <input type="number" id="PresentDaysInput" placeholder="0">
                         </div>
 
-                        
                         <div class="input-field">
                             <label>Pay Period Start Date</label>
-                            <input type="date" id="PayPeriodStartDate"  readonly>
+                            <input type="Date" id="PayPeriodStartDate">
                         </div>
 
                         <div class="input-field">
                             <label>Pay Period End Date</label>
-                            <input type="date" id="PayPeriodEndDate"  readonly>
+                            <input type="Date" id="PayPeriodEndDate">
                         </div> 
 
                         <div class="input-field">
                             <label>Basic Salary</label>
-                            <input type="number" placeholder="Enter Amount" required readonly>
+                            <input type="number" id="BasicSalaryInput" placeholder="Enter Amount">
                         </div>
                     </div>
                 </div>
@@ -237,7 +231,7 @@
   
     </body>
     
-    <script>
+<script>
     document.getElementById('fetchAndSaveLink').addEventListener('click', function (event) {
         event.preventDefault();
 
@@ -260,48 +254,186 @@
             });
     });
 
+
     function openForm(button) {
-        console.log('Button clicked!');
-        if (!(button instanceof Element && button instanceof HTMLButtonElement)) {
-            console.error('Invalid button element.');
-            return;
+            console.log('Button clicked!');
+            if (!(button instanceof Element && button instanceof HTMLButtonElement)) {
+                console.error('Invalid button element.');
+                return;
+            }
+
+            // Get the clicked row
+            var row = button.closest('tr');
+            // Get the EMP ID from the data attribute
+            EmpID = button.getAttribute('data-empid');
+
+            // Fetch data based on EMP ID from your backend (you may use AJAX)
+            fetchDataFromBackend(EmpID)
+                .then(data => {
+                    // Update the form fields with the fetched data
+                    document.getElementById('EmpIdInput').value = data.data.EmpID;
+                    document.getElementById('FirstNameInput').value = `${data.data.FirstName} ${data.data.MiddleName} ${data.data.LastName}`;
+                    document.getElementById('EmpTypeInput').value = data.data.EmpType;
+                    document.getElementById('JobNameInput').value = data.data.JobName;
+
+                   
+                            // Set the constant salary based on the job name
+                            const constantSalaries = {
+                                "Front-end Developer": 60000,
+                                "Back-end Developer": 65000,
+                                "Full-stack Developer": 70000,
+                                "DevOps Engineer": 75000,
+                                "Quality Assurance": 55000,
+                                "Product Manager": 90000,
+                                "Project Manager": 85000,
+                                "User Experience Designer": 75000,
+                                "User Interface Designer": 70000,
+                                "Software Engineer": 68000,
+                                // Add more jobs and salaries as needed
+                            };
+                            const jobName = data.data.JobName;
+                            const constantSalary = constantSalaries[jobName] || 0; // Default to 0 if job name not found
+
+                            // Display the constant salary in the BasicSalaryInput field
+                            document.getElementById('BasicSalaryInput').value = constantSalary;
+
+                            const createdDate = new Date(data.data.created_at);
+                            const payPeriodStartDate = createdDate.toISOString().split('T')[0];
+
+                            const endDate = new Date(createdDate);
+                            endDate.setDate(endDate.getDate() + 14); // 14 days is 2 weeks
+
+                            // Display the pay period start date in the PayPeriodStartDate input field
+                            document.getElementById('PayPeriodStartDate').value = payPeriodStartDate;
+
+                            // Display the pay period end date in the PayPeriodEndDate input field
+                            document.getElementById('PayPeriodEndDate').value = endDate.toISOString().split('T')[0];
+
+                            fetchPresentDays(EmpID)
+                                .then(presentDaysData => {
+                                    const presentDays = presentDaysData.present_days || 0;
+                                    document.getElementById('PresentDaysInput').value = presentDays;
+
+                                })
+                                .catch(error => {
+                                    console.error('Error fetching present days:', error);
+                                    // Handle error as needed
+                                });
+
+                            // Open the form
+                            document.getElementById('Emp-Form').style.display = 'block';
+                        })
+                        
+                        
+                .catch(error => {
+                    console.error('Error fetching data:', error);
+                    // Handle error as needed
+                });
         }
 
-        // Get the clicked row
-        var row = button.closest('tr');
-        // Get the EMP ID from the data attribute
-        EmpID = button.getAttribute('data-empid');
-
-        // Fetch data based on EMP ID from your backend (you may use AJAX)
-        fetchDataFromBackend(EmpID)
-            .then(data => {
-                // Update the form fields with the fetched data
-                document.getElementById('EmpIdInput').value = data.data.EmpID;
-                document.getElementById('FirstNameInput').value = `${data.data.FirstName} ${data.data.MiddleName} ${data.data.LastName}`;
-                document.getElementById('EmpTypeInput').value = data.data.EmpType;
-                document.getElementById('JobNameInput').value = data.data.JobName;
-                
-
-                // Open the form
-                document.getElementById('Emp-Form').style.display = 'block';
-            })
-            .catch(error => {
-                console.error('Error fetching data:', error);
-                // Handle error as needed
-            });
-    }
-
-    function fetchDataFromBackend(EmpID) {
-        // Use your backend endpoint to fetch data based on EMP ID
-        // Replace '/employee/' with the actual path to your Laravel route
-        return fetch(`/employee/${EmpID}`)
+        function fetchPresentDays(empId) {
+        // Use your backend endpoint to fetch present days based on EMP ID
+        // Replace '/employee_attendance/' with the actual path to your Laravel route
+        return fetch(`/api/employee_attendance/${empId}/present-days`)
             .then(response => {
                 if (!response.ok) {
                     throw new Error(`HTTP error! Status: ${response.status}`);
                 }
                 return response.json();
             });
+        }
+
+        function fetchDataFromBackend(EmpID) {
+            // Use your backend endpoint to fetch data based on EMP ID
+            // Replace '/employee/' with the actual path to your Laravel route
+            return fetch(`/employee/${EmpID}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! Status: ${response.status}`);
+                    }
+                    return response.json();
+
+                
+                });
+        }
+ // Salary input
+$(document).ready(function () {
+    // Function to initialize the table with default rows and values
+    function initializeTable(container, values) {
+        var tableContainer = container.find('.table-container');
+
+        // Create a table with editable rows
+        var tableHtml = '<table>';
+        tableHtml += '<thead><tr><th>Title</th><th>Amount</th><th></th></tr></thead>';
+        tableHtml += '<tbody>';
+
+        // Add rows with predefined values
+        values.forEach(function (item) {
+            tableHtml += '<tr>';
+            tableHtml += '<td contenteditable="true">' + item.title + '</td>';
+            tableHtml += '<td contenteditable="true" class="amount-input" oninput="validateNumberInput(this)">' + item.amount + '</td>';
+            tableHtml += '<td><button class="delete-row-btn"><i class="fas fa-trash-alt"></i></button></td>';
+            tableHtml += '</tr>';
+        });
+
+        tableHtml += '</tbody>';
+        tableHtml += '</table>';
+
+        // Append the table to the table container
+        tableContainer.html(tableHtml);
     }
+
+    // Call the initializeTable function to add default rows with values on page load
+    initializeTable($('.card:contains("Allowance")'), [
+        { title: 'Internet Allowance', amount: 1000 },
+        { title: 'Professional Development Allowance', amount: 2000 },
+        
+    ]);
+
+    initializeTable($('.card:contains("Deduction")'), [
+        { title: 'SSS', amount: 900 },
+        { title: 'PHILHEALTH', amount:2000 },
+        { title: 'PAGIBIG', amount: 100 }
+    ]);
+
+    $(".create-table-btn").click(function (event) {
+        // Prevent the default behavior of the anchor tag
+        event.preventDefault();
+
+        // Find the closest table-container within the same card
+        var tableContainer = $(this).closest('.card').find('.table-container');
+
+        // Show the table container
+        tableContainer.show();
+
+        // Check if the table already exists
+        var existingTable = tableContainer.find('table');
+
+        // If the table already exists, add a new row
+        if (existingTable.length > 0) {
+            var newRow = '<tr><td contenteditable="true"></td><td contenteditable="true" class="amount-input" oninput="validateNumberInput(this)"></td><td><button class="delete-row-btn"><i class="fas fa-trash-alt"></i></button></td></tr>';
+            existingTable.find('tbody').append(newRow);
+        } else {
+            // Create a table with editable rows
+            var tableHtml = '<table>';
+            tableHtml += '<thead><tr><th>Title</th><th>Amount</th><th></th></tr></thead>';
+            tableHtml += '<tbody><tr><td contenteditable="true"></td><td contenteditable="true" class="amount-input" oninput="validateNumberInput(this)"></td><td><button class="delete-row-btn"><i class="fas fa-trash-alt"></i></button></td></tr></tbody>';
+            tableHtml += '</table>';
+
+            // Append the table to the table container
+            tableContainer.html(tableHtml);
+        }
+    });
+
+    // Handle row deletion
+    $(document).on('click', '.delete-row-btn', function () {
+        // Find the closest row and remove it
+        $(this).closest('tr').remove();
+
+        // Check the number of rows and add or remove scrollbar
+        var tableContainer = $(this).closest('.card').find('.table-container');
+    });
+});
 
 </script>
 

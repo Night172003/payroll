@@ -114,7 +114,7 @@ a {
   width: 245px;
   padding: 0px 20px 0px 10px;
   background-color: #212b36;
-  background-image: url("images/nav_line.jpg");
+  background-image: "{{ url('assets/images/users/nav_line.jpg')}}";
   background-position: right top;
   background-repeat: repeat-y;
 }
@@ -452,3 +452,4 @@ header .current-date {
 .spacer {
   margin-bottom: 20px; /* Adjust the value as needed */
 }
+

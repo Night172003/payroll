@@ -105,52 +105,64 @@ document.addEventListener("DOMContentLoaded", function () {
 //Search Employee within the Employee Payslip
 function searchFunction() {
     // Declare variables
-    var input, filter, table, tr, td, i, txtValue;
-    input = document.getElementById("myInput");
-    filter = input.value.trim().toUpperCase(); // Trim extra spaces from the input
-    table = document.getElementById("employee-records");
-    tr = table.getElementsByTagName("tr");
+    var nameInput, startDateInput, endDateInput, table, tr, nameFilter, startDate, endDate, dateColumnIndex, td, i, nameTxtValue, dateTxtValue;
 
-    // Loop through all table rows, and hide those that don't match the search query
-    for (i = 0; i < tr.length; i++) {
-        td = tr[i].getElementsByTagName("td")[2]; 
-        if (td) {
-            txtValue = td.textContent || td.innerText;
-            txtValue = txtValue.trim().toUpperCase(); // Trim extra spaces from the table cell content
-            if (txtValue.indexOf(filter) > -1) {
-                tr[i].style.display = "";
-            } else {
-                tr[i].style.display = "none";
-            }
-        }
-    }
-}
+    // Get the values of employee name and date inputs
+    nameInput = document.getElementById("myInput");
+    startDateInput = document.getElementById("startDateInput");
+    endDateInput = document.getElementById("endDateInput");
 
-function searchFunctionDate() {
-    // Declare variables
-    var input, filter, table, tr, td, i, txtValue, dateColumnIndex;
-    
-    input = document.getElementById("myInput1");
-    filter = input.value.trim().toUpperCase(); // Trim extra spaces from the input
+    // Trim extra spaces from the inputs
+    nameFilter = nameInput.value.trim().toUpperCase();
+    startDate = startDateInput.value.trim();
+    endDate = endDateInput.value.trim();
+
+    // Table and row elements
     table = document.getElementById("employee-records");
     tr = table.getElementsByTagName("tr");
     dateColumnIndex = 4; // Adjust this value to match the index of the date column
 
-    // Loop through all table rows, and hide those that don't match the search query
+    // Loop through all table rows, and hide those that don't match the search criteria
     for (i = 0; i < tr.length; i++) {
-        td = tr[i].getElementsByTagName("td")[dateColumnIndex];
-        if (td) {
-            txtValue = td.textContent || td.innerText;
-            txtValue = txtValue.trim().toUpperCase(); // Trim extra spaces from the table cell content
-            if (txtValue.indexOf(filter) > -1) {
-                tr[i].style.display = "";
+        // Get the employee name and date cells
+        td = tr[i].getElementsByTagName("td")[2]; // Adjust this value to match the index of the name column
+        var dateCell = tr[i].getElementsByTagName("td")[dateColumnIndex];
+
+        // Check if both name and date cells exist
+        if (td && dateCell) {
+            // Get the text content of the name and date cells
+            nameTxtValue = td.textContent || td.innerText;
+            dateTxtValue = dateCell.textContent.trim();
+
+            // Trim extra spaces from the text content
+            nameTxtValue = nameTxtValue.trim().toUpperCase();
+
+            // Check if the name matches the search criteria
+            if (nameTxtValue.indexOf(nameFilter) > -1) {
+                // Check if the date range is specified
+                if (startDate !== "" && endDate !== "") {
+                    // Check if the date falls within the specified range
+                    if (isDateInRange(new Date(dateTxtValue), new Date(startDate), new Date(endDate))) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                } else {
+                    // If no date range is specified, show the row
+                    tr[i].style.display = "";
+                }
             } else {
+                // Hide the row if the name doesn't match the search criteria
                 tr[i].style.display = "none";
             }
         }
     }
 }
 
+// Function to check if a date is within a specified range
+function isDateInRange(date, startDate, endDate) {
+    return date >= startDate && date <= endDate;
+}
 //Popup form
 // function openForm() {
 //     document.getElementById("Emp-Form").style.display = "block";
@@ -211,54 +223,5 @@ function saveForm() {
     closeForm();
 }
 
-// Salary input
-$(document).ready(function () {
-    $(".create-table-btn").click(function () {
-        // Find the closest table-container within the same card
-        var tableContainer = $(this).closest('.card').find('.table-container');
-
-        // Check if the table already exists
-        var existingTable = tableContainer.find('table');
-
-        // If the table already exists, add a new row
-        if (existingTable.length > 0) {
-            var newRow = '<tr><td contenteditable="true"></td><td contenteditable="true" class="amount-input" oninput="validateNumberInput(this)"></td><td><button class="delete-row-btn"><i class="fas fa-trash-alt"></i></button></td></tr>';
-            existingTable.find('tbody').append(newRow);
-        } else {
-            // Create a table with editable rows
-            var tableHtml = '<table>';
-            tableHtml += '<thead><tr><th>Title</th><th>Amount</th><th></th></tr></thead>';
-            tableHtml += '<tbody><tr><td contenteditable="true"></td><td contenteditable="true" class="amount-input" oninput="validateNumberInput(this)"></td><td><button class="delete-row-btn"><i class="fas fa-trash-alt"></i></button></td></tr></tbody>';
-            tableHtml += '</table>';
-
-            // Append the table to the table container
-            tableContainer.html(tableHtml);
-        }
-
-        // Show the table container
-        tableContainer.show();
-
-        // Check the number of rows and add scrollbar if needed
-        checkRowCountAndAddScrollbar(tableContainer);
-    });
-
-    // Handle row deletion
-    $(document).on('click', '.delete-row-btn', function () {
-        // Find the closest row and remove it
-        $(this).closest('tr').remove();
-
-        // Check the number of rows and add or remove scrollbar
-        var tableContainer = $(this).closest('.card').find('.table-container');
-        checkRowCountAndAddScrollbar(tableContainer);
-    });
-
-
-
-
-
-
-
-    
-});
 
 

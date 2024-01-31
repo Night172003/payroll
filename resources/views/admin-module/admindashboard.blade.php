@@ -45,26 +45,19 @@
                 <div class="section-divider1"></div>
                 <ul class="days"></ul>
             </div>
-            <div class="sidebar-menu">
-                <form action="{{ route('logout') }}" method="POST">
-                    @csrf
-                    <button type="submit" onclick="validateLogin()"> <i class="fas fa-sign-out-alt"></i> Logout</button>
-                </form>
-            </div>
+            
         </div>
     </div>
 
     <div class="body">
         <ul class="navigation">
             <li>
-                <div class="user">
-                    <img src="{{ url('assets/images/users/dj.jpg')}}" />
-                    <span class="online-indicator"></span>
-                    <a href="#" class="name">
-                        <span>Daniel Ford Padilla</span>
-                        <span class="sm">Administrator</span>
-                    </a>
-                </div>
+            <div class="sidebar-menu">
+                <form action="{{ route('logout') }}" method="POST">
+                    @csrf
+                    <button type="submit" onclick="validateLogin()"> <i class="fas fa-sign-out-alt"></i> Logout</button>
+                </form>
+            </div>
             </li>
         </ul>
 
@@ -75,7 +68,9 @@
             <ul class="sub-header">
                 <li>HOME | Welcome Back Administrator!</li>
                 <div class="spacer"></div>
-                <strong>Announcement:</strong> Please check attendance logs.
+                <strong>Announcement:</strong> Please check attendance logs.<br>
+                <strong>Announcement:</strong> Don't forget to Update List!
+
             </ul>
             <div class="body-header">
                    

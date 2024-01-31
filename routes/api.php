@@ -3,7 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PayslipController;
-
+use App\Http\Controllers\AttendanceController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -20,3 +20,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('/employee/{EmpID}', [PayslipController::class, 'getEmployeeDataByEmpId']);
+
+Route::get('/employee_attendance/{empId}/present-days', [AttendanceController::class, 'getPresentDays']);

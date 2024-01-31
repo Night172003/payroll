@@ -35,36 +35,50 @@
             <h1>QuickTech <small>Payroll Management System -Login</small></h1>
         </div>
         
-        <div class="notification" id="notification"></div>
+                <div class="notification" id="notification">
+            @if(Session::has('showPopup') && Session::get('showPopup'))
+                <!-- Display pop-up for invalid credentials using JavaScript -->
+                <div class="alert alert-danger">
+                    Invalid credentials. Please try again.
+                </div>
+            @endif
+        </div>
            
-            <form action="{{route('login-user')}}" method="post">
-                @if(Session::has('success'))
-                <div class="alert alert-success">{{Session::get('success')}}</div>
-                @endif
-                @if(Session::has('fail'))
-                <div class="alert alert-danger">{{Session::get('fail')}}</div>
-                @endif
-                @csrf
-                
-                    <input type="text" class="form-control" placeholder="Username" name="email" value="">
-                    <span class="text-danger">@error('email') {{$message}} @enderror</span>
-                
-                
-                    <input type="password" class="form-control" placeholder="Password" name="password" value="">
-                    <span class="text-danger">@error('password') {{$message}} @enderror</span>
-                
-                    <label for="rememberMe">
-                        <input type="checkbox" id="rememberMe" name="rememberMe"> Remember Me
-                    </label>
-                    <button type="submit" onclick="validateLogin()">Sign in <span class="icon-arrow-next icon-white"></span></button>
-                    
-            </form>
-            
-      
-       <!-- <div class="forgot-password">
-            <a href="#">Forgot Password?</a>
-        </div> -->
+        <form action="{{ route('login-user') }}" method="post" onsubmit="return validateForm()">
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+            @csrf
+
+            <input type="text" class="form-control" placeholder="Username" name="email" id="email" value="">
+            <span class="text-danger" id="email-error"></span>
+
+            <input type="password" class="form-control" placeholder="Password" name="password" value="">
+            <span class="text-danger">@error('password') {{ $message }} @enderror</span>
+
+            <label for="rememberMe">
+                <input type="checkbox" id="rememberMe" name="rememberMe"> Remember Me
+            </label>
+
+            <button type="submit">Sign in <span class="icon-arrow-next icon-white"></span></button>
+        </form>
     </div>
+    
+
+<!-- Your existing HTML content -->
+
+<script>
+    // Optional: You can use JavaScript to automatically close the alert after a certain time
+    setTimeout(function() {
+        document.querySelector('.alert').style.display = 'none';
+    }, 5000); // Adjust the time as needed (5000 milliseconds = 5 seconds)
+</script>
 </body>
 
 </html>

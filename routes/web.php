@@ -21,6 +21,9 @@ Route::post('/logout',[CustomAuthController::class,'logout'])->name('logout');
 Route::get('/adminDashboard',[CustomAuthController::class,'adminDashboard'])->name('adminDashboard');
 
 Route::get('/admindashboardAttendance',[AttendanceController::class,'showTable'])->name('admindashboardAttendance');
+Route::get('/fetch-and-save', [AttendanceController::class, 'fetchDataAndSave']);
+
+
 
 Route::get('/admindashboardPayslipSalary',[PayslipController::class,'showTable'])->name('admindashboardPayslipSalary');
 Route::get('/admindashboardPayslip/fetch', [PayslipController::class, 'fetchDataAndSave'])->name('fetchdata');

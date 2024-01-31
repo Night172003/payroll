@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Pagination\LengthAwarePaginator;
 use App\Models\AdminEmpPayslip;
+use Carbon\Carbon;
+
 
 class PayslipController extends Controller
 {
@@ -83,24 +85,24 @@ class PayslipController extends Controller
     }
 
     public function getEmployeeDataByEmpID($EmpID)
-{
-    try {
-        // Retrieve employee data based on EmpID
-        $employeeData = AdminEmpPayslip::where('EmpID', $EmpID)->first();
+    {
+        try {
+            // Retrieve employee data based on EmpID
+            $employeeData = AdminEmpPayslip::where('EmpID', $EmpID)->first();
 
-        if (!$employeeData) {
-            return response()->json(['error' => 'Employee not found for EmpID: ' . $EmpID], 404);
+            if (!$employeeData) {
+                return response()->json(['error' => 'Employee not found for EmpID: ' . $EmpID], 404);
+            }
+
+            return response()->json(['data' => $employeeData]);
+        } catch (\Exception $e) {
+            // Log the error
+            \Log::error('Error in getEmployeeDataByEmpID function: ' . $e->getMessage());
+
+            // Return a more detailed error response
+            return response()->json(['error' => 'An error occurred. Check the logs for details.'], 500);
         }
-
-        return response()->json(['data' => $employeeData]);
-    } catch (\Exception $e) {
-        // Log the error
-        \Log::error('Error in getEmployeeDataByEmpID function: ' . $e->getMessage());
-
-        // Return a more detailed error response
-        return response()->json(['error' => 'An error occurred. Check the logs for details.'], 500);
     }
-}
 
 
 }

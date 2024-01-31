@@ -2,22 +2,20 @@
 
 namespace App\Http\Controllers\api;
 namespace App\Http\Controllers;
+
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Http;
-
-use Hash;
 use Session;
 
 class CustomAuthController extends Controller
 {
-    public function login(){
+    public function login()
+    {
         return view("auth.login");
     }
 
-
-/*ieedit pa if llagyan ng hash if(Hash::check($request->password,$user->password)) to cover the pass in localhost*/
-public function loginUser(Request $request)
+    public function loginUser(Request $request)
 {
     // Validate the request data
     $request->validate([
@@ -46,28 +44,28 @@ public function loginUser(Request $request)
                 // Check if 'is_admin' is equal to 1
                 if ($loggedInUser["is_admin"] === 1) {
                     // Redirect to admin dashboard
-                    return view("admin-module.admindashboard");
+                    return redirect()->route('adminDashboard'); // Change 'adminDashboard' to your actual admin dashboard route name
                 } else {
                     // Redirect to user dashboard
-                    return view("user-module.userDashboardPayslip");
+                    return redirect()->route('userDashboardPayslip'); // Change 'userDashboardPayslip' to your actual user dashboard payslip route name
                 }
             } else {
-                // Handle the case when the password doesn't match
-                return redirect()->route('login')->with('error', 'Invalid credentials');
+                // Display pop-up for invalid credentials using JavaScript
+                return redirect()->route('login')->with('error', 'Invalid credentials')->with('showPopup', true);
             }
         } else {
-            // Handle the case when the logged-in user is not found in the response
-            return redirect()->route('login')->with('error', 'Invalid credentials');
+            // Display pop-up for invalid credentials using JavaScript
+            return redirect()->route('login')->with('error', 'Invalid credentials')->with('showPopup', true);
         }
     } else {
         // Handle the case when the API response is not successful
         $errorMessage = $response->json('error_message', 'Invalid credentials');
-        return redirect()->route('login')->with('error', $errorMessage);
+        // Display pop-up for invalid credentials using JavaScript
+        return redirect()->route('login')->with('error', $errorMessage)->with('showPopup', true);
     }
 }
 
-
-public function logout()
+    public function logout()
     {
         auth()->logout();
 
@@ -77,17 +75,13 @@ public function logout()
         return redirect()->route('login');
     }
 
-public function adminDashboard()
+    public function adminDashboard()
     {
         return view("admin-module.admindashboard");
     }
 
-    
-public function userDashboardPayslip()
-{
-    return view("user-module.userdashboardPayslip");
+    public function userDashboardPayslip()
+    {
+        return view("user-module.userdashboardPayslip");
+    }
 }
-
-}
-
-
