@@ -13,6 +13,14 @@ return new class extends Migration
     {
         Schema::create('employees', function (Blueprint $table) {
             $table->id();
+            $table->integer('EmpID')->unique();
+            $table->string('FirstName');
+            $table->string('LastName');
+            $table->string('JobName');
+            $table->date('PayPeriodStartDate');
+            $table->date('PayPeriodEndDate');
+            $table->decimal('BasicSalary', 10, 2);
+            $table->decimal('NetPay', 10, 2)->nullable();
             $table->timestamps();
         });
     }

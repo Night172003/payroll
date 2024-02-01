@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Pagination\LengthAwarePaginator;
 use App\Models\AdminEmpPayslip;
+use App\Models\Employee;
+use App\Models\Allowance;
+use App\Models\Deduction;
 use Carbon\Carbon;
 
 
@@ -105,6 +108,7 @@ class PayslipController extends Controller
     }
 
 
+    
 }
         
         

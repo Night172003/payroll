@@ -453,3 +453,6 @@ header .current-date {
   margin-bottom: 20px; /* Adjust the value as needed */
 }
 
+.amount-input {
+  text-align: right;
+}

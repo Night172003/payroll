@@ -155,8 +155,8 @@
                         </div>
 
                         <div class="input-field">
-                            <label>Employee Type</label>
-                            <input type="text" id="EmpTypeInput" placeholder="Full-time" readonly>
+                            <label>Present Days</label>
+                            <input type="number" id="PresentDaysInput" placeholder="0">
                         </div>
 
                         <div class="input-field">
@@ -164,9 +164,10 @@
                             <input type="text" id="JobNameInput" placeholder="Software Developer" readonly>
                         </div>
                         
+                        
                         <div class="input-field">
-                            <label>Present Days</label>
-                            <input type="number" id="PresentDaysInput" placeholder="0">
+                            <label>Paid Time Off</label>
+                            <input type="number" id="LeaveInput" placeholder="0" readonly>
                         </div>
 
                         <div class="input-field">
@@ -191,36 +192,37 @@
                 <div class="card-container">
                   <!-- Card 1 -->
                   <div class="card">
-                    <div class="card-header">Allowance<button class="create-table-btn">+</button></div>
-                    <div class="card-body">
-                      <div class="table-container"></div>
-                      <p>Total Allowance: 0</p>
-                      </div>  
+                        <div class="card-header">Allowance<button class="create-table-btn">+</button></div>
+                        <div class="card-body">
+                            <div class="table-container" id="allowance-table"></div>
+                            <p id="totalAllowance">Total Allowance: 0</p>
+                        </div>  
                     </div>
-                  
-                
-                  <!-- Card 2 -->
-                  <div class="card">
-                    <div class="card-header">Deduction<button class="create-table-btn">+</button></div>
-                    <div class="card-body">
-                      <div class="table-container"></div>
-                      <p>Total Deduction: 0 </p>
+
+                    <!-- Card 2 -->
+                    <div class="card">
+                        <div class="card-header">Deduction<button class="create-table-btn">+</button></div>
+                        <div class="card-body">
+                            <div class="table-container" id="deduction-table"></div>
+                            <p id="totalDeduction">Total Deduction: 0</p>
+                        </div>
                     </div>
                   </div>
-                </div>
+                
                   <!-- eof card-container -->
             </form>
 
                <!-- Net Pay -->
+
                <div class="net-pay-container">
               <label for="net-pay">Net Pay: 0</label>
             </div>
             <div class="section-divider2"></div>
-         
                     <!-- Save button -->
                     <div class="button-container">
-                        <button type="button" class="save-button" onclick="saveForm()">Update</button>
-                        <button type="button" class="close-button" onclick="closeForm()">Close</button>
+                    <button type="button" class="save-button" onclick="ComputeForm()">Compute</button>
+                        <button type="button" class="close-button" onclick="saveForm()">Update</button>
+                        <button type="button" class="save-button" onclick="closeForm()">Close</button>
                     </div>
                  <!-- End of Save button --> 
             </div>
@@ -256,80 +258,79 @@
 
 
     function openForm(button) {
-            console.log('Button clicked!');
-            if (!(button instanceof Element && button instanceof HTMLButtonElement)) {
-                console.error('Invalid button element.');
-                return;
-            }
+    console.log('Button clicked!');
+    if (!(button instanceof Element && button instanceof HTMLButtonElement)) {
+        console.error('Invalid button element.');
+        return;
+    }
 
-            // Get the clicked row
-            var row = button.closest('tr');
-            // Get the EMP ID from the data attribute
-            EmpID = button.getAttribute('data-empid');
+    // Get the clicked row
+    var row = button.closest('tr');
+    // Get the EMP ID from the data attribute
+    EmpID = button.getAttribute('data-empid');
 
-            // Fetch data based on EMP ID from your backend (you may use AJAX)
-            fetchDataFromBackend(EmpID)
-                .then(data => {
-                    // Update the form fields with the fetched data
-                    document.getElementById('EmpIdInput').value = data.data.EmpID;
-                    document.getElementById('FirstNameInput').value = `${data.data.FirstName} ${data.data.MiddleName} ${data.data.LastName}`;
-                    document.getElementById('EmpTypeInput').value = data.data.EmpType;
-                    document.getElementById('JobNameInput').value = data.data.JobName;
+    // Fetch data based on EMP ID from your backend (you may use AJAX)
+    Promise.all([fetchDataFromBackend(EmpID), fetchLeaveData(EmpID)])
+        .then(([employeeData, leaveData]) => {
+            // Update the form fields with the fetched data
+            document.getElementById('EmpIdInput').value = employeeData.data.EmpID;
+            document.getElementById('FirstNameInput').value = `${employeeData.data.FirstName} ${employeeData.data.MiddleName} ${employeeData.data.LastName}`;
+            document.getElementById('JobNameInput').value = employeeData.data.JobName;
 
-                   
-                            // Set the constant salary based on the job name
-                            const constantSalaries = {
-                                "Front-end Developer": 60000,
-                                "Back-end Developer": 65000,
-                                "Full-stack Developer": 70000,
-                                "DevOps Engineer": 75000,
-                                "Quality Assurance": 55000,
-                                "Product Manager": 90000,
-                                "Project Manager": 85000,
-                                "User Experience Designer": 75000,
-                                "User Interface Designer": 70000,
-                                "Software Engineer": 68000,
-                                // Add more jobs and salaries as needed
-                            };
-                            const jobName = data.data.JobName;
-                            const constantSalary = constantSalaries[jobName] || 0; // Default to 0 if job name not found
+            // Set the constant salary based on the job name
+            const constantSalaries = {
+                "Front-end Developer": 60000,
+                "Back-end Developer": 65000,
+                "Full-stack Developer": 70000,
+                "DevOps Engineer": 75000,
+                "Quality Assurance": 55000,
+                "Product Manager": 90000,
+                "Project Manager": 85000,
+                "User Experience Designer": 75000,
+                "User Interface Designer": 70000,
+                "Software Engineer": 68000,
+                // Add more jobs and salaries as needed
+            };
+            const jobName = employeeData.data.JobName;
+            const constantSalary = constantSalaries[jobName] || 0; // Default to 0 if job name not found
 
-                            // Display the constant salary in the BasicSalaryInput field
-                            document.getElementById('BasicSalaryInput').value = constantSalary;
+            // Display the constant salary in the BasicSalaryInput field
+            document.getElementById('BasicSalaryInput').value = constantSalary;
 
-                            const createdDate = new Date(data.data.created_at);
-                            const payPeriodStartDate = createdDate.toISOString().split('T')[0];
+            const createdDate = new Date(employeeData.data.created_at);
+            const payPeriodStartDate = createdDate.toISOString().split('T')[0];
 
-                            const endDate = new Date(createdDate);
-                            endDate.setDate(endDate.getDate() + 14); // 14 days is 2 weeks
+            const endDate = new Date(createdDate);
+            endDate.setDate(endDate.getDate() + 14); // 14 days is 2 weeks
 
-                            // Display the pay period start date in the PayPeriodStartDate input field
-                            document.getElementById('PayPeriodStartDate').value = payPeriodStartDate;
+            // Display the pay period start date in the PayPeriodStartDate input field
+            document.getElementById('PayPeriodStartDate').value = payPeriodStartDate;
 
-                            // Display the pay period end date in the PayPeriodEndDate input field
-                            document.getElementById('PayPeriodEndDate').value = endDate.toISOString().split('T')[0];
+            // Display the pay period end date in the PayPeriodEndDate input field
+            document.getElementById('PayPeriodEndDate').value = endDate.toISOString().split('T')[0];
 
-                            fetchPresentDays(EmpID)
-                                .then(presentDaysData => {
-                                    const presentDays = presentDaysData.present_days || 0;
-                                    document.getElementById('PresentDaysInput').value = presentDays;
+            fetchPresentDays(EmpID)
+                .then(presentDaysData => {
+                    const presentDays = presentDaysData.present_days || 0;
+                    document.getElementById('PresentDaysInput').value = presentDays;
 
-                                })
-                                .catch(error => {
-                                    console.error('Error fetching present days:', error);
-                                    // Handle error as needed
-                                });
+                    // Display leave data count in the LeaveInput field
+                    const leaveCount = leaveData.data || 0;
+                    document.getElementById('LeaveInput').value = leaveCount;
 
-                            // Open the form
-                            document.getElementById('Emp-Form').style.display = 'block';
-                        })
-                        
-                        
+                    // Open the form
+                    document.getElementById('Emp-Form').style.display = 'block';
+                })
                 .catch(error => {
-                    console.error('Error fetching data:', error);
+                    console.error('Error fetching present days:', error);
                     // Handle error as needed
                 });
-        }
+        })
+        .catch(error => {
+            console.error('Error fetching data:', error);
+            // Handle error as needed
+        });
+}
 
         function fetchPresentDays(empId) {
         // Use your backend endpoint to fetch present days based on EMP ID
@@ -354,6 +355,17 @@
                     return response.json();
 
                 
+                });
+        }
+        function fetchLeaveData(empId) {
+            // Use your backend endpoint to fetch leave data based on EMP ID
+            // Replace '/api/employee_leave/' with the actual path to your Laravel route
+            return fetch(`/api/employee_leave/${empId}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! Status: ${response.status}`);
+                    }
+                    return response.json();
                 });
         }
  // Salary input
@@ -434,7 +446,80 @@ $(document).ready(function () {
         var tableContainer = $(this).closest('.card').find('.table-container');
     });
 });
+function computeTotalAllowance() {
+    const allowanceInputs = $('.card:has(.card-header:contains("Allowance")) .amount-input');
+    let totalAllowance = 0;
 
+    allowanceInputs.each(function () {
+        totalAllowance += parseFloat($(this).text().replace(',', '')) || 0;
+    });
+
+    $('#totalAllowance').text(`Total Allowance: ${totalAllowance.toFixed(2)}`);
+}
+
+function computeTotalDeduction() {
+    const deductionInputs = $('.card:has(.card-header:contains("Deduction")) .amount-input');
+    let totalDeduction = 0;
+
+    deductionInputs.each(function () {
+        totalDeduction += parseFloat($(this).text().replace(',', '')) || 0;
+    });
+
+    $('#totalDeduction').text(`Total Deduction: ${totalDeduction.toFixed(2)}`);
+}
+
+function validateNumberInput(input, event) {
+    // Check if the key pressed is Enter (keyCode 13) or the Enter key in the new event code property
+    if (event.key === 'Enter' || event.keyCode === 13) {
+        // Prevent the default Enter key behavior in contenteditable fields
+        event.preventDefault();
+
+        // If Enter is pressed, blur the input to make it lose focus
+        input.blur();
+        return;
+    }
+
+    let value = $(input).text().trim(); // Use trim to remove leading/trailing spaces
+
+    // Replace commas with empty strings to handle input like "1,000"
+    value = value.replace(/,/g, '');
+
+    // Allow decimal values with a dot or a comma
+    const decimalRegex = /^-?\d*\.?\d*$/;
+    
+    if (decimalRegex.test(value)) {
+        // If the value is a valid number, format it to two decimal places
+        const formattedValue = parseFloat(value).toFixed(2);
+        // Update the input's content with the formatted number
+        $(input).text(formattedValue);
+    } else {
+        // If the value is not a valid number, set the content to 0.00
+        $(input).text('0.00');
+    }
+
+    // Recompute totals after validating the input
+    computeTotalAllowance();
+    computeTotalDeduction();
+}
+function ComputeForm() {
+    // Compute total allowance
+    computeTotalAllowance();
+
+    // Compute total deduction
+    computeTotalDeduction();
+
+    // Get basic salary from input field
+    const basicSalary = parseFloat($('#BasicSalaryInput').val()) || 0;
+
+    // Calculate net pay
+    const totalAllowance = parseFloat($('#totalAllowance').text().replace('Total Allowance: ', '')) || 0;
+    const totalDeduction = parseFloat($('#totalDeduction').text().replace('Total Deduction: ', '')) || 0;
+
+    const netPay = basicSalary / 2 + totalAllowance - totalDeduction;
+
+    // Display net pay
+    $('.net-pay-container label').text(`Net Pay: ${netPay.toFixed(2)}`);
+}
 </script>
 
   

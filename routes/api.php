@@ -22,3 +22,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get('/employee/{EmpID}', [PayslipController::class, 'getEmployeeDataByEmpId']);
 
 Route::get('/employee_attendance/{empId}/present-days', [AttendanceController::class, 'getPresentDays']);
+Route::get('/employee_leave/{empId}', [AttendanceController::class, 'getLeaveData']);
