@@ -5,13 +5,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin - PMS</title>
-    <!-- Imports -->
+
+    <!-- External Stylesheets -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofP+g5R4LcDA2D2QQknDd9NIfY4EUL2n" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" />
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
-    <link href='https://fonts.googleapis.com/css?family=Inter' rel='stylesheet'>
     <link rel="stylesheet" href="{{ asset('assets/css/stylesheet.css') }}">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
-    <link rel="icon" href="{{ url('assets/images/favicon.ico')}}" type="image/x-icon">
+
+    <!-- External Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="https://kit.fontawesome.com/852106c7be.js" crossorigin="anonymous"></script>
     <script src="{{ asset('assets/js/calendar_script.js') }}" defer></script>
     <script src="{{ asset('assets/js/script.js') }}"></script>
@@ -20,7 +24,9 @@
 <body>
     <div class="sidebar">
         <div class="logo-container">
-            <a href="{{ route('adminDashboard') }}"><img src="{{ url('assets/images/Logo2.png')}}" alt="Logo" class="sidebar-logo"></a>
+            <a href="{{ route('adminDashboard') }}">
+                <img src="{{ url('assets/images/Logo2.png')}}" alt="Logo" class="sidebar-logo">
+            </a>
         </div>
         <ul class="sidebar-menu">
             <li><a href="{{ route('adminDashboard') }}" class="active"><i class="fa-solid fa-house-user"></i> Home</a></li>
@@ -50,19 +56,20 @@
                 <div class="section-divider1"></div>
                 <ul class="days"></ul>
             </div>
-            
         </div>
     </div>
 
     <div class="body">
         <ul class="navigation">
             <li>
-            <div class="sidebar-menu">
-                <form action="{{ route('logout') }}" method="POST">
-                    @csrf
-                    <button type="submit" onclick="validateLogin()"> <i class="fas fa-sign-out-alt"></i> Logout</button>
-                </form>
-            </div>
+                <div class="sidebar-menu">
+                    <form action="{{ route('logout') }}" method="POST">
+                        @csrf
+                        <button type="submit" onclick="validateLogin()">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </button>
+                    </form>
+                </div>
             </li>
         </ul>
 
@@ -78,8 +85,6 @@
             <div class="body-container">
                 <h3>ATTENDANCE LOGS</h3>
                 <div class="body-header">
-                    <!--<label for="date-range">Select Range</label>
-                    <input type="date" id="date" value="current-date"> -->
                     <label>Select Name:</label>
                     <input type="text" id="myInput" onkeyup="searchFunction()" placeholder="Employee Name" title="Search employee">
                     <label>Start Date:</label>
@@ -87,8 +92,6 @@
 
                     <label>End Date:</label>
                     <input type="date" id="endDateInput" oninput="searchFunction()" placeholder="Select End Date">
-
-
                 </div>
 
                 <table class="table-record" id="employee-records">
@@ -118,7 +121,7 @@
                                         <td>{{ implode(' ', [$employee['FirstName'], $employee['MiddleName'], $employee['LastName']]) }}</td>
                                         <td>{{ $employee['job']['JobName'] }}</td>
                                         <td>{{ $attendance['Date'] }}</td>
-                                        <td>{{ $attendance['PunchIn'] }}</td> 
+                                        <td>{{ $attendance['PunchIn'] }}</td>
                                         <td>{{ $attendance['PunchOut'] }}</td>
                                         <td>{{ $employee['EmpType'] }}</td>
                                     </tr>

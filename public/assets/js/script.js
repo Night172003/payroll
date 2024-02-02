@@ -225,3 +225,59 @@ function saveForm() {
 
 
 
+function searchFunction1() {
+    // Declare variables
+    var nameInput, startDateInput, endDateInput, table, tr, nameFilter, startDate, endDate, dateColumnIndex, td, i, nameTxtValue, dateTxtValue;
+
+    // Get the values of employee name and date inputs
+    nameInput = document.getElementById("myInput");
+    startDateInput = document.getElementById("startDateInput");
+    endDateInput = document.getElementById("endDateInput");
+
+    // Trim extra spaces from the inputs
+    nameFilter = nameInput.value.trim().toUpperCase();
+    startDate = startDateInput.value.trim();
+    endDate = endDateInput.value.trim();
+
+    // Table and row elements
+    table = document.getElementById("employee-records");
+    tr = table.getElementsByTagName("tr");
+    dateColumnIndex = 2; // Adjust this value to match the index of the date column
+
+    // Loop through all table rows, and hide those that don't match the search criteria
+    for (i = 0; i < tr.length; i++) {
+        // Get the employee name and date cells
+        td = tr[i].getElementsByTagName("td")[2]; // Adjust this value to match the index of the name column
+        var dateCell = tr[i].getElementsByTagName("td")[dateColumnIndex];
+
+        // Check if both name and date cells exist
+        if (td && dateCell) {
+            // Get the text content of the name and date cells
+            nameTxtValue = td.textContent || td.innerText;
+            dateTxtValue = dateCell.textContent.trim();
+
+            // Trim extra spaces from the text content
+            nameTxtValue = nameTxtValue.trim().toUpperCase();
+
+            // Check if the name matches the search criteria
+            if (nameTxtValue.indexOf(nameFilter) > -1) {
+                // Check if the date range is specified
+                if (startDate !== "" && endDate !== "") {
+                    // Check if the date falls within the specified range
+                    if (isDateInRange(new Date(dateTxtValue), new Date(startDate), new Date(endDate))) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                } else {
+                    // If no date range is specified, show the row
+                    tr[i].style.display = "";
+                }
+            } else {
+                // Hide the row if the name doesn't match the search criteria
+                tr[i].style.display = "none";
+            }
+        }
+    }
+}
+

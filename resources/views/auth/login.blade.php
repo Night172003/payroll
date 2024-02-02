@@ -61,10 +61,8 @@
 
             <input type="password" class="form-control" placeholder="Password" name="password" value="">
             <span class="text-danger">@error('password') {{ $message }} @enderror</span>
+            <br>
 
-            <label for="rememberMe">
-                <input type="checkbox" id="rememberMe" name="rememberMe"> Remember Me
-            </label>
 
             <button type="submit">Sign in <span class="icon-arrow-next icon-white"></span></button>
         </form>

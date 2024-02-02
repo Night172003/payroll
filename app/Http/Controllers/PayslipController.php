@@ -6,9 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Pagination\LengthAwarePaginator;
 use App\Models\AdminEmpPayslip;
-use App\Models\Employee;
-use App\Models\Allowance;
-use App\Models\Deduction;
+
+use App\Models\Payslip;
 use Carbon\Carbon;
 
 
@@ -107,9 +106,38 @@ class PayslipController extends Controller
         }
     }
 
+    public function savePayslip(Request $request)
+    {
+        // Validate the form data
+        $request->validate([
+            'emp_id' => 'required',
+            'present_days' => 'required|numeric',
+            'pay_period_start_date' => 'required|date',
+            'pay_period_end_date' => 'required|date',
+            'basic_salary' => 'required|numeric',
+            'total_allowance' => 'required|numeric',
+            'total_deduction' => 'required|numeric',
+            'net_pay' => 'required|numeric',
+            // Include other form fields validation as needed
+        ]);
 
-    
+        // Check if the payslip with the provided ID exists
+        $payslip = App\Models\Payslip::find($request->input('emp_id'));
+
+        if ($payslip) {
+            // If the payslip exists, update its data
+            $payslip->update($request->all());
+        } else {
+            // If the payslip doesn't exist, create a new one
+            App\Models\Payslip::create($request->all());
+        }
+
+        return response()->json(['message' => 'Payslip saved or updated successfully']);
+    }
+
 }
+    
+
         
         
 

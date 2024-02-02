@@ -6,7 +6,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Hash;
 use Session;
+
+
 
 class CustomAuthController extends Controller
 {
@@ -24,7 +27,7 @@ class CustomAuthController extends Controller
     ]);
 
     // Make a request to your authentication API using get
-    $response = Http::get('http://127.0.0.1:8080/api/employees/login', [
+    $response = Http::get('http://127.0.0.1:8001/api/get-credentials', [
         'email' => $request->email,
         'password' => $request->password,
     ]);
@@ -39,10 +42,10 @@ class CustomAuthController extends Controller
 
         // Check if a user is found
         if ($loggedInUser) {
-            // Check if the password matches
-            if ($request->password === $loggedInUser['password']) {
+            // Check if the password matches using password_verify
+            if (password_verify($request->password, $loggedInUser['password'])) {
                 // Check if 'is_admin' is equal to 1
-                if ($loggedInUser["is_admin"] === 1) {
+                if ($loggedInUser["isAdmin"] === 1) {
                     // Redirect to admin dashboard
                     return redirect()->route('adminDashboard'); // Change 'adminDashboard' to your actual admin dashboard route name
                 } else {

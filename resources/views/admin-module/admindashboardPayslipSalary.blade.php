@@ -2,24 +2,25 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin - PMS</title>
-    <!-- imports -->
+
+    <!-- External Stylesheets -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofP+g5R4LcDA2D2QQknDd9NIfY4EUL2n" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-    <link href="https://fonts.googleapis.com/css?family=Inter" rel="stylesheet" />
-    <script src="https://kit.fontawesome.com/852106c7be.js" crossorigin="anonymous"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet" />
-    <link rel="icon" href="{{ url('assets/images/favicon.ico')}}" type="image/x-icon">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" />
+    <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/stylesheet.css') }}">
+
+    <!-- External Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://kit.fontawesome.com/852106c7be.js" crossorigin="anonymous"></script>
     <script src="{{ asset('assets/js/calendar_script.js') }}" defer></script>
     <script src="{{ asset('assets/js/script.js') }}"></script>
-    
 </head>
+
 
 <body>
     <div class="sidebar">
@@ -87,7 +88,8 @@
                     <div class="body-header">
                         
                         <label for="bdaymonth">Select Name:</label>
-                        <input type="text" id="myInput" onkeyup="searchFunction()" placeholder="Search Employee" title="Search employee">
+                        <input type="text" id="myInput" onkeyup="searchFunction1()" placeholder="Employee Name" title="Search employee">
+
                         <button class="add-payroll-btn" id="fetchAndSaveLink" href="{{ route('fetchdata') }}" method ="post">Update List</button>
                     </div>
 
@@ -139,388 +141,468 @@
             <h1>EMPLOYEE PAYSLIP</h1>
             <div class="section-divider2"></div>
 
-            <!-- Employee Details -->
-            <form action="#">
-                <div class="employee record">
-                    <!-- <span class="title">Employee Details</span> -->
-                    <div class="fields">
-                        <div class="input-field">
-                            <label>Employee ID</label>
-                            <input type="text" id="EmpIdInput" placeholder="R-0000" readonly>
-                        </div>
-
-                        <div class="input-field">
-                            <label>First Name</label>
-                            <input type="text" id="FirstNameInput" placeholder="Juan Dela C. Cruz" readonly >
-                        </div>
-
-                        <div class="input-field">
-                            <label>Present Days</label>
-                            <input type="number" id="PresentDaysInput" placeholder="0">
-                        </div>
-
-                        <div class="input-field">
-                            <label>Position</label>
-                            <input type="text" id="JobNameInput" placeholder="Software Developer" readonly>
-                        </div>
-                        
-                        
-                        <div class="input-field">
-                            <label>Paid Time Off</label>
-                            <input type="number" id="LeaveInput" placeholder="0" readonly>
-                        </div>
-
-                        <div class="input-field">
-                            <label>Pay Period Start Date</label>
-                            <input type="Date" id="PayPeriodStartDate">
-                        </div>
-
-                        <div class="input-field">
-                            <label>Pay Period End Date</label>
-                            <input type="Date" id="PayPeriodEndDate">
-                        </div> 
-
-                        <div class="input-field">
-                            <label>Basic Salary</label>
-                            <input type="number" id="BasicSalaryInput" placeholder="Enter Amount">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="section-divider2"></div>
-                <!-- Salary Input -->
-                <div class="card-container">
-                  <!-- Card 1 -->
-                  <div class="card">
-                        <div class="card-header">Allowance<button class="create-table-btn">+</button></div>
-                        <div class="card-body">
-                            <div class="table-container" id="allowance-table"></div>
-                            <p id="totalAllowance">Total Allowance: 0</p>
-                        </div>  
-                    </div>
-
-                    <!-- Card 2 -->
-                    <div class="card">
-                        <div class="card-header">Deduction<button class="create-table-btn">+</button></div>
-                        <div class="card-body">
-                            <div class="table-container" id="deduction-table"></div>
-                            <p id="totalDeduction">Total Deduction: 0</p>
-                        </div>
-                    </div>
-                  </div>
+                <!-- Employee Details -->
+                <form method="POST" action="{{ route('savePayslip') }}">
+                @csrf
                 
-                  <!-- eof card-container -->
-            </form>
+                    <div class="employee record">
+                        <!-- <span class="title">Employee Details</span> -->
+                        <div class="fields">
+                            <div class="input-field">
+                                <label>Employee ID</label>
+                                <input type="text" id="EmpIdInput" placeholder="R-0000" readonly>
+                            </div>
 
-               <!-- Net Pay -->
+                            <div class="input-field">
+                                <label>First Name</label>
+                                <input type="text" id="FirstNameInput" placeholder="Juan Dela C. Cruz" readonly >
+                            </div>
 
-               <div class="net-pay-container">
-              <label for="net-pay">Net Pay: 0</label>
-            </div>
-            <div class="section-divider2"></div>
-                    <!-- Save button -->
-                    <div class="button-container">
-                    <button type="button" class="save-button" onclick="ComputeForm()">Compute</button>
-                        <button type="button" class="close-button" onclick="saveForm()">Update</button>
-                        <button type="button" class="save-button" onclick="closeForm()">Close</button>
+                            <div class="input-field">
+                                <label>Present Days</label>
+                                <input type="number" id="PresentDaysInput" placeholder="0">
+                            </div>
+
+                            <div class="input-field">
+                                <label>Position</label>
+                                <input type="text" id="JobNameInput" placeholder="Software Developer" readonly>
+                            </div>
+                            
+                            
+                            <div class="input-field">
+                                <label>Paid Time Off</label>
+                                <input type="number" id="LeaveInput" placeholder="0" readonly>
+                            </div>
+
+                            <div class="input-field">
+                                <label>Pay Period Start Date</label>
+                                <input type="Date" id="PayPeriodStartDate">
+                            </div>
+
+                            <div class="input-field">
+                                <label>Pay Period End Date</label>
+                                <input type="Date" id="PayPeriodEndDate">
+                            </div> 
+
+                            <div class="input-field">
+                                <label>Basic Salary</label>
+                                <input type="number" id="BasicSalaryInput" placeholder="Enter Amount">
+                            </div>
+                        </div>
                     </div>
-                 <!-- End of Save button --> 
+
+                    <div class="section-divider2"></div>
+                    <!-- Salary Input -->
+                    <div class="card-container">
+                    <!-- Card 1 -->
+                    <div class="card">
+                            <div class="card-header">Allowance<button class="create-table-btn">+</button></div>
+                            <div class="card-body">
+                                <div class="table-container" id="allowance-table"></div>
+                                <p id="totalAllowance">Total Allowance: 0</p>
+                            </div>  
+                        </div>
+
+                        <!-- Card 2 -->
+                        <div class="card">
+                            <div class="card-header">Deduction<button class="create-table-btn">+</button></div>
+                            <div class="card-body">
+                                <div class="table-container" id="deduction-table"></div>
+                                <p id="totalDeduction">Total Deduction: 0</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- eof card-container -->
+                </form>
+
+                <!-- Net Pay -->
+
+                <div class="net-pay-container">
+                <label for="net-pay">Net Pay: 0</label>
+                </div>
+                <div class="section-divider2"></div>
+                        <!-- Save button -->
+                        <div class="button-container">
+                        <button type="button" class="save-button" onclick="ComputeForm()">Compute</button>
+                            <button type="button" class="close-button" onclick="saveForm()">Update</button>
+                            <button type="button" class="save-button" onclick="closeForm()">Close</button>
+                        </div>
+                    <!-- End of Save button --> 
+                </div>
+                <!-- End of form Container -->
             </div>
-            <!-- End of form Container -->
+        <!-- End of Form Popup -->
         </div>
-      <!-- End of Form Popup -->
-    </div>
-  
-    </body>
     
-<script>
-    document.getElementById('fetchAndSaveLink').addEventListener('click', function (event) {
-        event.preventDefault();
+        </body>
+        
+    <script>
 
-        fetch("{{ route('fetchdata') }}", {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                // Add any other headers as needed
-            },
-        })
-            .then(response => response.json())
-            .then(data => {
-                console.log(data.message);
-                location.reload();
-                alert('Database has been updated!');
+                
+        function searchFunction1() {
+            // Declare variables
+            var nameInput, table, tr, nameFilter, td, i, nameTxtValue;
+
+            // Get the value of the employee name input
+            nameInput = document.getElementById("myInput");
+
+            // Trim extra spaces from the input
+            nameFilter = nameInput.value.trim().toUpperCase();
+
+            // Table and row elements
+            table = document.getElementById("employee-records");
+            tr = table.getElementsByTagName("tr");
+
+            // Loop through all table rows, and hide those that don't match the search criteria
+            for (i = 0; i < tr.length; i++) {
+                // Get the employee name cell
+                td = tr[i].getElementsByTagName("td")[2]; // Adjust this value to match the index of the name column
+
+                // Check if the name cell exists
+                if (td) {
+                    // Get the text content of the name cell
+                    nameTxtValue = td.textContent || td.innerText;
+
+                    // Trim extra spaces from the text content
+                    nameTxtValue = nameTxtValue.trim().toUpperCase();
+
+                    // Check if the name matches the search criteria
+                    if (nameTxtValue.indexOf(nameFilter) > -1) {
+                        // Show the row
+                        tr[i].style.display = "";
+                    } else {
+                        // Hide the row if the name doesn't match the search criteria
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
+        }
+
+        document.getElementById('fetchAndSaveLink').addEventListener('click', function (event) {
+            event.preventDefault();
+
+            fetch("{{ route('fetchdata') }}", {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    // Add any other headers as needed
+                },
             })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('An error occurred while updating the database.');
-            });
-    });
-
-
-    function openForm(button) {
-    console.log('Button clicked!');
-    if (!(button instanceof Element && button instanceof HTMLButtonElement)) {
-        console.error('Invalid button element.');
-        return;
-    }
-
-    // Get the clicked row
-    var row = button.closest('tr');
-    // Get the EMP ID from the data attribute
-    EmpID = button.getAttribute('data-empid');
-
-    // Fetch data based on EMP ID from your backend (you may use AJAX)
-    Promise.all([fetchDataFromBackend(EmpID), fetchLeaveData(EmpID)])
-        .then(([employeeData, leaveData]) => {
-            // Update the form fields with the fetched data
-            document.getElementById('EmpIdInput').value = employeeData.data.EmpID;
-            document.getElementById('FirstNameInput').value = `${employeeData.data.FirstName} ${employeeData.data.MiddleName} ${employeeData.data.LastName}`;
-            document.getElementById('JobNameInput').value = employeeData.data.JobName;
-
-            // Set the constant salary based on the job name
-            const constantSalaries = {
-                "Front-end Developer": 60000,
-                "Back-end Developer": 65000,
-                "Full-stack Developer": 70000,
-                "DevOps Engineer": 75000,
-                "Quality Assurance": 55000,
-                "Product Manager": 90000,
-                "Project Manager": 85000,
-                "User Experience Designer": 75000,
-                "User Interface Designer": 70000,
-                "Software Engineer": 68000,
-                // Add more jobs and salaries as needed
-            };
-            const jobName = employeeData.data.JobName;
-            const constantSalary = constantSalaries[jobName] || 0; // Default to 0 if job name not found
-
-            // Display the constant salary in the BasicSalaryInput field
-            document.getElementById('BasicSalaryInput').value = constantSalary;
-
-            const createdDate = new Date(employeeData.data.created_at);
-            const payPeriodStartDate = createdDate.toISOString().split('T')[0];
-
-            const endDate = new Date(createdDate);
-            endDate.setDate(endDate.getDate() + 14); // 14 days is 2 weeks
-
-            // Display the pay period start date in the PayPeriodStartDate input field
-            document.getElementById('PayPeriodStartDate').value = payPeriodStartDate;
-
-            // Display the pay period end date in the PayPeriodEndDate input field
-            document.getElementById('PayPeriodEndDate').value = endDate.toISOString().split('T')[0];
-
-            fetchPresentDays(EmpID)
-                .then(presentDaysData => {
-                    const presentDays = presentDaysData.present_days || 0;
-                    document.getElementById('PresentDaysInput').value = presentDays;
-
-                    // Display leave data count in the LeaveInput field
-                    const leaveCount = leaveData.data || 0;
-                    document.getElementById('LeaveInput').value = leaveCount;
-
-                    // Open the form
-                    document.getElementById('Emp-Form').style.display = 'block';
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data.message);
+                    location.reload();
+                    alert('Database has been updated!');
                 })
                 .catch(error => {
-                    console.error('Error fetching present days:', error);
-                    // Handle error as needed
+                    console.error('Error:', error);
+                    alert('An error occurred while updating the database.');
                 });
-        })
-        .catch(error => {
-            console.error('Error fetching data:', error);
-            // Handle error as needed
         });
-}
 
-        function fetchPresentDays(empId) {
-        // Use your backend endpoint to fetch present days based on EMP ID
-        // Replace '/employee_attendance/' with the actual path to your Laravel route
-        return fetch(`/api/employee_attendance/${empId}/present-days`)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
-                }
-                return response.json();
+
+        function openForm(button) {
+        console.log('Button clicked!');
+        if (!(button instanceof Element && button instanceof HTMLButtonElement)) {
+            console.error('Invalid button element.');
+            return;
+        }
+
+        // Get the clicked row
+        var row = button.closest('tr');
+        // Get the EMP ID from the data attribute
+        EmpID = button.getAttribute('data-empid');
+
+        // Fetch data based on EMP ID from your backend (you may use AJAX)
+        Promise.all([fetchDataFromBackend(EmpID), fetchLeaveData(EmpID)])
+            .then(([employeeData, leaveData]) => {
+                // Update the form fields with the fetched data
+                document.getElementById('EmpIdInput').value = employeeData.data.EmpID;
+                document.getElementById('FirstNameInput').value = `${employeeData.data.FirstName} ${employeeData.data.MiddleName} ${employeeData.data.LastName}`;
+                document.getElementById('JobNameInput').value = employeeData.data.JobName;
+
+                // Set the constant salary based on the job name
+                const constantSalaries = {
+                    "Front-end Developer": 60000,
+                    "Back-end Developer": 65000,
+                    "Full-stack Developer": 70000,
+                    "DevOps Engineer": 75000,
+                    "Quality Assurance": 55000,
+                    "Product Manager": 90000,
+                    "Project Manager": 85000,
+                    "User Experience Designer": 75000,
+                    "User Interface Designer": 70000,
+                    "Software Engineer": 68000,
+                    // Add more jobs and salaries as needed
+                };
+                const jobName = employeeData.data.JobName;
+                const constantSalary = constantSalaries[jobName] || 0; // Default to 0 if job name not found
+
+                // Display the constant salary in the BasicSalaryInput field
+                document.getElementById('BasicSalaryInput').value = constantSalary;
+
+                const createdDate = new Date(employeeData.data.created_at);
+                const payPeriodStartDate = createdDate.toISOString().split('T')[0];
+
+                const endDate = new Date(createdDate);
+                endDate.setDate(endDate.getDate() + 14); // 14 days is 2 weeks
+
+                // Display the pay period start date in the PayPeriodStartDate input field
+                document.getElementById('PayPeriodStartDate').value = payPeriodStartDate;
+
+                // Display the pay period end date in the PayPeriodEndDate input field
+                document.getElementById('PayPeriodEndDate').value = endDate.toISOString().split('T')[0];
+
+                fetchPresentDays(EmpID)
+                    .then(presentDaysData => {
+                        const presentDays = presentDaysData.present_days || 0;
+                        document.getElementById('PresentDaysInput').value = presentDays;
+
+                        // Display leave data count in the LeaveInput field
+                        const leaveCount = leaveData.data || 0;
+                        document.getElementById('LeaveInput').value = leaveCount;
+
+                        // Open the form
+                        document.getElementById('Emp-Form').style.display = 'block';
+                    })
+                    .catch(error => {
+                        console.error('Error fetching present days:', error);
+                        // Handle error as needed
+                    });
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+                // Handle error as needed
             });
-        }
-
-        function fetchDataFromBackend(EmpID) {
-            // Use your backend endpoint to fetch data based on EMP ID
-            // Replace '/employee/' with the actual path to your Laravel route
-            return fetch(`/employee/${EmpID}`)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! Status: ${response.status}`);
-                    }
-                    return response.json();
-
-                
-                });
-        }
-        function fetchLeaveData(empId) {
-            // Use your backend endpoint to fetch leave data based on EMP ID
-            // Replace '/api/employee_leave/' with the actual path to your Laravel route
-            return fetch(`/api/employee_leave/${empId}`)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! Status: ${response.status}`);
-                    }
-                    return response.json();
-                });
-        }
- // Salary input
-$(document).ready(function () {
-    // Function to initialize the table with default rows and values
-    function initializeTable(container, values) {
-        var tableContainer = container.find('.table-container');
-
-        // Create a table with editable rows
-        var tableHtml = '<table>';
-        tableHtml += '<thead><tr><th>Title</th><th>Amount</th><th></th></tr></thead>';
-        tableHtml += '<tbody>';
-
-        // Add rows with predefined values
-        values.forEach(function (item) {
-            tableHtml += '<tr>';
-            tableHtml += '<td contenteditable="true">' + item.title + '</td>';
-            tableHtml += '<td contenteditable="true" class="amount-input" oninput="validateNumberInput(this)">' + item.amount + '</td>';
-            tableHtml += '<td><button class="delete-row-btn"><i class="fas fa-trash-alt"></i></button></td>';
-            tableHtml += '</tr>';
-        });
-
-        tableHtml += '</tbody>';
-        tableHtml += '</table>';
-
-        // Append the table to the table container
-        tableContainer.html(tableHtml);
     }
 
-    // Call the initializeTable function to add default rows with values on page load
-    initializeTable($('.card:contains("Allowance")'), [
-        { title: 'Internet Allowance', amount: 1000 },
-        { title: 'Professional Development Allowance', amount: 2000 },
-        
-    ]);
+            function fetchPresentDays(empId) {
+            // Use your backend endpoint to fetch present days based on EMP ID
+            // Replace '/employee_attendance/' with the actual path to your Laravel route
+            return fetch(`/api/employee_attendance/${empId}/present-days`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! Status: ${response.status}`);
+                    }
+                    return response.json();
+                });
+            }
 
-    initializeTable($('.card:contains("Deduction")'), [
-        { title: 'SSS', amount: 900 },
-        { title: 'PHILHEALTH', amount:2000 },
-        { title: 'PAGIBIG', amount: 100 }
-    ]);
+            function fetchDataFromBackend(EmpID) {
+                // Use your backend endpoint to fetch data based on EMP ID
+                // Replace '/employee/' with the actual path to your Laravel route
+                return fetch(`/employee/${EmpID}`)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error(`HTTP error! Status: ${response.status}`);
+                        }
+                        return response.json();
 
-    $(".create-table-btn").click(function (event) {
-        // Prevent the default behavior of the anchor tag
-        event.preventDefault();
+                    
+                    });
+            }
+            function fetchLeaveData(empId) {
+                // Use your backend endpoint to fetch leave data based on EMP ID
+                // Replace '/api/employee_leave/' with the actual path to your Laravel route
+                return fetch(`/api/employee_leave/${empId}`)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error(`HTTP error! Status: ${response.status}`);
+                        }
+                        return response.json();
+                    });
+            }
+    // Salary input
+    $(document).ready(function () {
+        // Function to initialize the table with default rows and values
+        function initializeTable(container, values) {
+            var tableContainer = container.find('.table-container');
 
-        // Find the closest table-container within the same card
-        var tableContainer = $(this).closest('.card').find('.table-container');
-
-        // Show the table container
-        tableContainer.show();
-
-        // Check if the table already exists
-        var existingTable = tableContainer.find('table');
-
-        // If the table already exists, add a new row
-        if (existingTable.length > 0) {
-            var newRow = '<tr><td contenteditable="true"></td><td contenteditable="true" class="amount-input" oninput="validateNumberInput(this)"></td><td><button class="delete-row-btn"><i class="fas fa-trash-alt"></i></button></td></tr>';
-            existingTable.find('tbody').append(newRow);
-        } else {
             // Create a table with editable rows
             var tableHtml = '<table>';
             tableHtml += '<thead><tr><th>Title</th><th>Amount</th><th></th></tr></thead>';
-            tableHtml += '<tbody><tr><td contenteditable="true"></td><td contenteditable="true" class="amount-input" oninput="validateNumberInput(this)"></td><td><button class="delete-row-btn"><i class="fas fa-trash-alt"></i></button></td></tr></tbody>';
+            tableHtml += '<tbody>';
+
+            // Add rows with predefined values
+            values.forEach(function (item) {
+                tableHtml += '<tr>';
+                tableHtml += '<td contenteditable="true">' + item.title + '</td>';
+                tableHtml += '<td contenteditable="true" class="amount-input" oninput="validateNumberInput(this)">' + item.amount + '</td>';
+                tableHtml += '<td><button class="delete-row-btn"><i class="fas fa-trash-alt"></i></button></td>';
+                tableHtml += '</tr>';
+            });
+
+            tableHtml += '</tbody>';
             tableHtml += '</table>';
 
             // Append the table to the table container
             tableContainer.html(tableHtml);
         }
+
+        // Call the initializeTable function to add default rows with values on page load
+        initializeTable($('.card:contains("Allowance")'), [
+            { title: 'Internet Allowance', amount: 1000 },
+            { title: 'Professional Development Allowance', amount: 2000 },
+            
+        ]);
+
+        initializeTable($('.card:contains("Deduction")'), [
+            { title: 'SSS', amount: 900 },
+            { title: 'PHILHEALTH', amount:2000 },
+            { title: 'PAGIBIG', amount: 100 }
+        ]);
+
+        $(".create-table-btn").click(function (event) {
+            // Prevent the default behavior of the anchor tag
+            event.preventDefault();
+
+            // Find the closest table-container within the same card
+            var tableContainer = $(this).closest('.card').find('.table-container');
+
+            // Show the table container
+            tableContainer.show();
+
+            // Check if the table already exists
+            var existingTable = tableContainer.find('table');
+
+            // If the table already exists, add a new row
+            if (existingTable.length > 0) {
+                var newRow = '<tr><td contenteditable="true"></td><td contenteditable="true" class="amount-input" oninput="validateNumberInput(this)"></td><td><button class="delete-row-btn"><i class="fas fa-trash-alt"></i></button></td></tr>';
+                existingTable.find('tbody').append(newRow);
+            } else {
+                // Create a table with editable rows
+                var tableHtml = '<table>';
+                tableHtml += '<thead><tr><th>Title</th><th>Amount</th><th></th></tr></thead>';
+                tableHtml += '<tbody><tr><td contenteditable="true"></td><td contenteditable="true" class="amount-input" oninput="validateNumberInput(this)"></td><td><button class="delete-row-btn"><i class="fas fa-trash-alt"></i></button></td></tr></tbody>';
+                tableHtml += '</table>';
+
+                // Append the table to the table container
+                tableContainer.html(tableHtml);
+            }
+        });
+
+        // Handle row deletion
+        $(document).on('click', '.delete-row-btn', function () {
+            // Find the closest row and remove it
+            $(this).closest('tr').remove();
+
+            // Check the number of rows and add or remove scrollbar
+            var tableContainer = $(this).closest('.card').find('.table-container');
+        });
     });
+    function computeTotalAllowance() {
+        const allowanceInputs = $('.card:has(.card-header:contains("Allowance")) .amount-input');
+        let totalAllowance = 0;
 
-    // Handle row deletion
-    $(document).on('click', '.delete-row-btn', function () {
-        // Find the closest row and remove it
-        $(this).closest('tr').remove();
+        allowanceInputs.each(function () {
+            totalAllowance += parseFloat($(this).text().replace(',', '')) || 0;
+        });
 
-        // Check the number of rows and add or remove scrollbar
-        var tableContainer = $(this).closest('.card').find('.table-container');
-    });
-});
-function computeTotalAllowance() {
-    const allowanceInputs = $('.card:has(.card-header:contains("Allowance")) .amount-input');
-    let totalAllowance = 0;
-
-    allowanceInputs.each(function () {
-        totalAllowance += parseFloat($(this).text().replace(',', '')) || 0;
-    });
-
-    $('#totalAllowance').text(`Total Allowance: ${totalAllowance.toFixed(2)}`);
-}
-
-function computeTotalDeduction() {
-    const deductionInputs = $('.card:has(.card-header:contains("Deduction")) .amount-input');
-    let totalDeduction = 0;
-
-    deductionInputs.each(function () {
-        totalDeduction += parseFloat($(this).text().replace(',', '')) || 0;
-    });
-
-    $('#totalDeduction').text(`Total Deduction: ${totalDeduction.toFixed(2)}`);
-}
-
-function validateNumberInput(input, event) {
-    // Check if the key pressed is Enter (keyCode 13) or the Enter key in the new event code property
-    if (event.key === 'Enter' || event.keyCode === 13) {
-        // Prevent the default Enter key behavior in contenteditable fields
-        event.preventDefault();
-
-        // If Enter is pressed, blur the input to make it lose focus
-        input.blur();
-        return;
+        $('#totalAllowance').text(`Total Allowance: ${totalAllowance.toFixed(2)}`);
     }
 
-    let value = $(input).text().trim(); // Use trim to remove leading/trailing spaces
+    function computeTotalDeduction() {
+        const deductionInputs = $('.card:has(.card-header:contains("Deduction")) .amount-input');
+        let totalDeduction = 0;
 
-    // Replace commas with empty strings to handle input like "1,000"
-    value = value.replace(/,/g, '');
+        deductionInputs.each(function () {
+            totalDeduction += parseFloat($(this).text().replace(',', '')) || 0;
+        });
 
-    // Allow decimal values with a dot or a comma
-    const decimalRegex = /^-?\d*\.?\d*$/;
-    
-    if (decimalRegex.test(value)) {
-        // If the value is a valid number, format it to two decimal places
-        const formattedValue = parseFloat(value).toFixed(2);
-        // Update the input's content with the formatted number
-        $(input).text(formattedValue);
-    } else {
-        // If the value is not a valid number, set the content to 0.00
-        $(input).text('0.00');
+        $('#totalDeduction').text(`Total Deduction: ${totalDeduction.toFixed(2)}`);
     }
 
-    // Recompute totals after validating the input
-    computeTotalAllowance();
-    computeTotalDeduction();
-}
-function ComputeForm() {
-    // Compute total allowance
-    computeTotalAllowance();
+    function validateNumberInput(input, event) {
+        // Check if the key pressed is Enter (keyCode 13) or the Enter key in the new event code property
+        if (event.key === 'Enter' || event.keyCode === 13) {
+            // Prevent the default Enter key behavior in contenteditable fields
+            event.preventDefault();
 
-    // Compute total deduction
-    computeTotalDeduction();
+            // If Enter is pressed, blur the input to make it lose focus
+            input.blur();
+            return;
+        }
 
-    // Get basic salary from input field
-    const basicSalary = parseFloat($('#BasicSalaryInput').val()) || 0;
+        let value = $(input).text().trim(); // Use trim to remove leading/trailing spaces
 
-    // Calculate net pay
-    const totalAllowance = parseFloat($('#totalAllowance').text().replace('Total Allowance: ', '')) || 0;
-    const totalDeduction = parseFloat($('#totalDeduction').text().replace('Total Deduction: ', '')) || 0;
+        // Replace commas with empty strings to handle input like "1,000"
+        value = value.replace(/,/g, '');
 
-    const netPay = basicSalary / 2 + totalAllowance - totalDeduction;
+        // Allow decimal values with a dot or a comma
+        const decimalRegex = /^-?\d*\.?\d*$/;
+        
+        if (decimalRegex.test(value)) {
+            // If the value is a valid number, format it to two decimal places
+            const formattedValue = parseFloat(value).toFixed(2);
+            // Update the input's content with the formatted number
+            $(input).text(formattedValue);
+        } else {
+            // If the value is not a valid number, set the content to 0.00
+            $(input).text('0.00');
+        }
 
-    // Display net pay
-    $('.net-pay-container label').text(`Net Pay: ${netPay.toFixed(2)}`);
+        // Recompute totals after validating the input
+        computeTotalAllowance();
+        computeTotalDeduction();
+    }
+    function ComputeForm() {
+        // Compute total allowance
+        computeTotalAllowance();
+
+        // Compute total deduction
+        computeTotalDeduction();
+
+        // Get basic salary from input field
+        const basicSalary = parseFloat($('#BasicSalaryInput').val()) || 0;
+
+        // Calculate net pay
+        const totalAllowance = parseFloat($('#totalAllowance').text().replace('Total Allowance: ', '')) || 0;
+        const totalDeduction = parseFloat($('#totalDeduction').text().replace('Total Deduction: ', '')) || 0;
+
+        const netPay = basicSalary / 2 + totalAllowance - totalDeduction;
+
+        // Display net pay
+        $('.net-pay-container label').text(`Net Pay: ${netPay.toFixed(2)}`);
+    }
+
+    function saveForm() {
+    const payslipId = $('#EmpIdInput').val();
+    const presentDays = $('#PresentDaysInput').val();
+    const startDate = $('#PayPeriodStartDate').val();
+    const endDate = $('#PayPeriodEndDate').val();
+    const basicSalary = $('#BasicSalaryInput').val();
+    const totalAllowance = $('#totalAllowance').text().replace('Total Allowance: ', '');
+    const totalDeduction = $('#totalDeduction').text().replace('Total Deduction: ', '');
+    const netPay = $('.net-pay-container label').text().replace('Net Pay: ', '');
+
+    const formData = {
+        _token: '{{ csrf_token() }}',
+        emp_id: payslipId,
+        present_days: presentDays,
+        pay_period_start_date: startDate,
+        pay_period_end_date: endDate,
+        basic_salary: basicSalary,
+        total_allowance: totalAllowance,
+        total_deduction: totalDeduction,
+        net_pay: netPay,
+        // Include other form fields as needed
+    };
+
+    $.ajax({
+        url: '{{ route('savePayslip') }}',
+        type: 'POST',
+        data: formData,
+        success: function (response) {
+            alert('Payslip saved or updated successfully!');
+        },
+        error: function (xhr, status, error) {
+            console.error('Error saving or updating Payslip:', error);
+            console.log('Response Text:', xhr.responseText);
+            alert('An error occurred while saving or updating the Payslip.');
+        }
+    });
 }
 </script>
 
-  
 </html>

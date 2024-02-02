@@ -28,6 +28,7 @@ Route::get('/fetch-and-save', [AttendanceController::class, 'fetchDataAndSave'])
 Route::get('/admindashboardPayslipSalary',[PayslipController::class,'showTable'])->name('admindashboardPayslipSalary');
 Route::get('/admindashboardPayslip/fetch', [PayslipController::class, 'fetchDataAndSave'])->name('fetchdata');
 Route::get('/employee/{EmpID}', [PayslipController::class, 'getEmployeeDataByEmpId']);
+Route::post('/save-payslip', [PayslipController::class, 'savePayslip'])->name('savePayslip');
 
 
 Route::get('/admindashboardPayroll',[PayrollController::class,'showTable'])->name('admindashboardPayroll');
