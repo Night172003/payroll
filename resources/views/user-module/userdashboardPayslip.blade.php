@@ -89,10 +89,10 @@
 
                 <section>
                     <p><strong>Reference No : </strong> 2024-001 </p>
-                    <p><strong>Employee ID:</strong> R-0000</p>
-                    <p><strong>Name:</strong> Ryan Kyle Basilides</p>
-                    <p><strong>Position:</strong> Software Developer</p>
-                    <p><strong>Pay Period:</strong> January 01,2024 - January 31, 2024</p>
+                    <p><strong>Employee ID:</strong> {{ $employeeDetails->EmpID }}</p>
+                    <p><strong>Name:</strong> {{ $employeeDetails->LastName . ', ' . $employeeDetails->FirstName . ' ' . $employeeDetails->MiddleName }}</p>
+                    <p><strong>Position:</strong> {{ $employeeDetails->JobName }}</p>
+                    <p><strong>Pay Period:</strong> February 3, 2024 - February 17, 2024</p>
                 </section>
 
                 <section>

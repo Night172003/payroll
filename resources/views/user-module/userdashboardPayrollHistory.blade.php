@@ -85,7 +85,7 @@
             <div class="body-container">
                 <h3>PAYSLIP HISTORY</h3>
                 <div class="body-header">
-                    <label for="month">Select Range</label>
+                    <label for="month">Select Month:</label>
                     <input type="month" id="month" name="month">
 
                 </div>
